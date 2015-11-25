@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('type'); // Type d'utilisateur (Enseignant ou Etudiant)
             $table->string('first_name'); // Prénom
             $table->string('last_name'); // Nom de famille
+            $table->string('type', 20); // Type de l'utilisateur
             $table->string('email', 176)->unique(); // Adresse e-mail
             $table->string('password', 60); // Mot de passe
             $table->rememberToken(); // Token pour se souvenir de la connexion
