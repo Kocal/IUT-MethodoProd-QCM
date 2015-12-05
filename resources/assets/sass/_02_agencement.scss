@@ -1,0 +1,46 @@
+.container {
+    @include container(1024px);
+}
+
+/**
+ * Header de la page
+ */
+#page__header {
+
+    .container {
+        @include container(960px);
+        display: flex;
+        align-items: center;
+
+    }
+
+    #navigation__container {
+        flex-grow: 1;
+    }
+
+    #navigation__menu {
+        list-style: none;
+        padding: 0;
+
+        li {
+            display: inline-block;
+            padding-left: 1em;
+        }
+    }
+}
+
+/**
+ * Contenu principal de la page
+ */
+#page__content {
+    .container {
+        padding: 0 2em 2em;
+    }
+}
+
+/**
+ * Footer de la page
+ */
+#page__footer {
+    margin: 3em 0;
+}

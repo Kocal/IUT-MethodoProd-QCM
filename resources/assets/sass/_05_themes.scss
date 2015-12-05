@@ -1,0 +1,69 @@
+// Couleur de fond du site
+$bg-site-color: #12735D;
+
+// Couleur de fond du contenu
+$bg-content-color: #fff;
+
+$green-lighten-color: lighten($bg-site-color, 60%);
+$green-darken-color: darken($bg-site-color, 13%);
+
+// Couleur du contenu
+$content-color: lighten(#000, 10%);
+
+html,
+body {
+    background: $bg-site-color;
+}
+
+/**
+ * Pour avoir la couleur blanches/vertes sur les liens
+ */
+#page__header,
+#page__footer {
+
+    text-align: center;
+
+    &, a {
+        color: $green-lighten-color;
+        text-decoration: none;
+        transition: all .1s linear;
+    }
+
+    a:hover {
+        color: lighten($green-lighten-color, 15%);
+        text-shadow: 0 0 30px rgba(#fff, .4);
+    }
+}
+
+#page__header {
+
+    #navigation__container {
+        text-align: right;
+    }
+
+    #navigation__menu {
+        font-size: 2rem;
+        font-weight: 300;
+
+    	@include susy-breakpoint((max-width: 600px)) {
+            font-size: 1.5rem;
+    	}
+
+        li:first-child {
+            border-left: 1px solid $green-lighten-color;
+        }
+    }
+}
+
+#page__content {
+
+    .container {
+        color: $content-color;
+        background: $bg-content-color;
+        box-shadow: 0 10px 50px rgba(#000, .3);
+    }
+}
+
+#page__footer {
+    color: $green-darken-color;
+}

@@ -1,0 +1,35 @@
+h1, h2, h3 {
+    font-weight: 100;
+}
+
+@for $i from 1 through 6 {
+
+    $title: (7 - $i);
+
+    h#{$i} {
+        font-size: $title * 1rem;
+        margin: $title * .5rem 0;
+    }
+
+    @include susy-breakpoint((max-width: 800px)) {
+        h#{$i} {
+            font-size: $title * .8rem;
+            margin: $title * .4rem 0;
+        }
+    }
+
+    @include susy-breakpoint((max-width: 700px)) {
+        h#{$i} {
+            font-size: $title * .6rem;
+            margin: $title * .3rem 0;
+        }
+    }
+
+    @include susy-breakpoint((max-width: 600px)) {
+        h#{$i} {
+            font-size: $title * .5rem;
+            margin: $title * .2rem 0;
+        }
+    }
+}
+
