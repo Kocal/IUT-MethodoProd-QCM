@@ -6,7 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+        "laravelcollective/html": "^5.1",
+        "adamwathan/bootforms": "^0.7.0",
+        "caouecs/laravel4-lang": "~2.0",
+        "barryvdh/laravel-ide-helper": "^2.1",
+        "barryvdh/laravel-debugbar": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

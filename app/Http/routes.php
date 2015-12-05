@@ -11,24 +11,24 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
-Route::get('/', function () {
-    die('Oui');
-});
+Route::get('/', ['as' => 'index', 'uses' => 'PageController@pageIndex']);
 
 /**
- * Gestion des utilisateurs
+ * Gestion de l'authentification et inscription
  */
-Route::get('auth/login', ['as' => 'login', 'uses' => 'Auth\AuthController@getLogin']);
-// Traitement pour la connexion
-Route::post('auth/login', ['as' => 'login', 'uses' => 'Auth\AuthController@postLogin']);
-// Déconnexion
-Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
-// Affiche le formulaire d'inscription
-Route::get('auth/register', ['as' => 'register', 'uses' => 'Auth\AuthController@getRegister']);
-// Traitement pour l'inscription
-Route::post('auth/register', ['as' => 'register', 'uses' => 'Auth\AuthController@postRegister']);
+Route::group(['as' => 'auth::', 'prefix' => 'auth'], function() {
+    // Affiche le formulaire d'authentification
+    Route::get('login', ['as' => 'login', 'uses' => 'Auth\AuthController@getLogin']);
+
+    // Traitement pour l'authentification
+    Route::post('login', ['as' => 'login', 'uses' => 'Auth\AuthController@postLogin']);
+
+    // Affiche le formulaire pour l'inscription
+    Route::get('register', ['as' => 'register', 'uses' => 'Auth\AuthController@getRegister']);
+
+    // Traitement pour l'inscription
+    Route::post('register', ['as' => 'register', 'uses' => 'Auth\AuthController@postRegister']);
+
+    // Déconnecte l'utilisateur
+    Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
+});

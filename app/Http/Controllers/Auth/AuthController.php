@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use Validator;
+use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -23,43 +26,73 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Valide les données issues du formulaire d'inscription
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param array $datas
+     * @return \Illuminate\Validation\Validator
      */
-    protected function validator(array $data)
+    public function validateRegistration(array $datas)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
+        return Validator::make($datas, [
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required|email|max:176|unique:users',
+            'status'     => 'required|in:student,teacher',
+            'password'   => 'required|confirmed|min:6',
+            'password_confirmation' => 'required'
         ]);
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Valide les données issues du formulaire de connexion
      *
-     * @param  array  $data
-     * @return User
+     * @param array $datas
+     * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function create(array $data)
+    public function validateAuthentification(array $datas)
+    {
+        return Validator::make($datas, [
+            'email'    => 'required|email|max:176',
+            'password' => 'required|min:6',
+        ]);
+    }
+
+    /**
+     * Créer un nouvel utilisateur et renvoie une instance de User
+     *
+     * @param array $datas
+     * @return \App\User
+     */
+    public function createUser(array $datas)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'first_name' => $datas['first_name'],
+            'last_name'  => $datas['last_name'],
+            'status'     => $datas['status'],
+            'email'      => $datas['email'],
+            'password'   => bcrypt($datas['password']),
         ]);
+    }
+
+
+    public function postRegister(Request $request)
+    {
+        $datas = $request->all();
+        $validator = $this->validateRegistration($datas);
+
+        if($validator->fails())
+        {
+            $this->throwValidationException($request, $validator);
+        }
+
+        Auth::login($this->createUser($datas));
+        Session::push('messages', "Votre inscription s'est correctement terminée");
+        return redirect($this->redirectPath());
     }
 }
