@@ -80,7 +80,6 @@ class AuthController extends Controller
         ]);
     }
 
-
     public function postRegister(Request $request)
     {
         $datas = $request->all();
