@@ -2,10 +2,8 @@
 function displayAlert() {
     $ret = '';
 
-    if(Session::has('messages'))
-    {
-        foreach(Session::get('messages') as $message)
-        {
+    if(Session::has('messages')) {
+        foreach(Session::get('messages') as $k => $message) {
             list($type, $message) = explode('|', $message);
             $ret .= sprintf('<div class="alert alert-%s">%s</div>', $type, $message);
         }
@@ -42,12 +40,32 @@ function displayAlert() {
                     </div>
                     <div id="navigation__container">
                         <ul id="navigation__menu">
-                            <?php if(Auth::check()): ?>
-                            <li><a href="{{ route('auth::logout') }}">Se déconnecter</a></li>
-                            <?php else: ?>
-                            <li><a href="{{ route('auth::login') }}">Se connecter</a></li>
-                            <li><a href="{{ route('auth::register') }}">S'inscrire</a></li>
-                            <?php endif; ?>
+                            @if(Auth::check())
+                                <?php switch(Auth::user()['status']) {
+                                    case 'student': { ?>
+                                        <li><a href="#">Participer</a></li>
+                                        <li><a href="#">Résultats</a></li>
+                                    <?php break;
+                                    }
+                                    case 'teacher': { ?>
+                                        <li><a href="#">Voir mes QCM</a></li>
+                                        <li><a href="#">Créer un QCM</a></li>
+                                    <?php break;
+                                    }
+                                    default:
+                                } ?>
+                            @endif
+                        </ul>
+                        <ul id="user__menu">
+                            @if(Auth::check())
+                                <li>
+                                    <b>{{ Auth::user()['first_name'] }} {{ Auth::user()['last_name'] }}</b><br>
+                                    <small><a href="{{ route('auth::logout') }}" class="">Se déconnecter</a></small>
+                                </li>
+                            @else
+                                <li><a href="{{ route('auth::login') }}">Se connecter</a></li>
+                                <li><a href="{{ route('auth::register') }}">S'inscrire</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>

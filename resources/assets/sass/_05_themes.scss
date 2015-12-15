@@ -33,6 +33,10 @@ body {
         color: lighten($green-lighten-color, 15%);
         text-shadow: 0 0 30px rgba(#fff, .4);
     }
+
+    b, strong {
+        color: #fff;
+    }
 }
 
 #page__header {
@@ -41,22 +45,22 @@ body {
         text-align: right;
     }
 
+    #user_menu,
     #navigation__menu {
         font-size: 2rem;
         font-weight: 300;
 
-    	@include susy-breakpoint((max-width: 600px)) {
+        @include susy-breakpoint((max-width: 600px)) {
             font-size: 1.5rem;
-    	}
-
-        li:first-child {
-            border-left: 1px solid $green-lighten-color;
         }
+    }
+
+    #user__menu {
+        border-left: 1px solid $green-lighten-color;
     }
 }
 
 #page__content {
-
     .container {
         color: $content-color;
         background: $bg-content-color;
