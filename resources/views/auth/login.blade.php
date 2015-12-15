@@ -1,10 +1,12 @@
 <?php
-$title = 'Connexion';
+    $title = 'Connexion';
 
-$columnSizes = [
-    'sm' => [4, 8],
-    'lg' => [2, 10]
-];
+    $columnSizes = [
+        'sm' => [4, 8],
+        'lg' => [3, 9]
+    ];
+
+    $requiredField = ' <sup style="color: #f00">*</sup>';
 ?>
 
 @extends('layouts.default')
@@ -18,11 +20,14 @@ $columnSizes = [
         {!! BootForm::openHorizontal($columnSizes)
             ->action(route('auth::login')) !!}
 
-            {!! BootForm::text('Adresse e-mail', 'email')
+            <p>Les champs précédés par le signe &laquo;<sub style="font-size: 16px"><?= $requiredField ?></sub> &raquo; doivent obligatoirement être renseignés.</p>
+            <br>
+
+            {!! BootForm::text('Adresse e-mail' . $requiredField, 'email')
                 ->required()
                 ->placeholder('adresse@exemple.com') !!}
 
-            {!! BootForm::password('Mot de passe', 'password')
+            {!! BootForm::password('Mot de passe' . $requiredField, 'password')
                 ->required() !!}
 
             {!! BootForm::submit('Se connecter')
