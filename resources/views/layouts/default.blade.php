@@ -53,7 +53,7 @@ function displayAlert() {
                                     }
                                     case 'teacher': { ?>
                                         <li><a href="#">Voir mes QCM</a></li>
-                                        <li><a href="#">Créer un QCM</a></li>
+                                        <li><a href="{{ route('qcm::create') }}">Créer un QCM</a></li>
                                     <?php break;
                                     }
                                     default:

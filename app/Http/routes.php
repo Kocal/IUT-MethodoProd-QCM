@@ -32,3 +32,18 @@ Route::group(['as' => 'auth::', 'prefix' => 'auth'], function() {
     // Déconnecte l'utilisateur
     Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
 });
+
+
+/**
+ * Gestion pour le QCM
+ */
+Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
+    // Affiche tous les QCM
+    Route::get('/', ['as' => 'index', 'uses' => 'QcmController@index']);
+
+    // Affiche le formulaire de création de QCM
+    Route::get('create', ['as' => 'create', 'uses' => 'QcmController@getCreate']);
+
+    // Traitement pour la création du QCM
+    Route::post('create', ['as' => 'create', 'uses' => 'QcmController@postCreate']);
+});
