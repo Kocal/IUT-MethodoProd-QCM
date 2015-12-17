@@ -104,7 +104,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function authenticated(Request $request) {
-        Session::push('messages', 'success|Connexion réussie');
+        $request->session()->flash('message', 'success|Connexion réussie');
         return redirect()->intended($this->redirectPath());
     }
 
