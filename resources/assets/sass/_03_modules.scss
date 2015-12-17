@@ -1,1 +1,10 @@
 @import "resources/assets/sass/components/types";
+
+.alert-container {
+  margin: 0 -2em;
+
+  > .alert {
+    border-radius: 0;
+    margin-bottom: -1px;
+  }
+}

@@ -5,30 +5,22 @@
 @section('content')
 
     <div class="page-home">
-        <div>
-            <h2>Voir tous les QCM</h2>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At dolorum ex impedit molestiae neque? Dolore
-                hic ipsum, iste iure molestias nulla optio quos soluta tempora totam. Accusamus cumque ea, ex nulla
-                officiis quibusdam sequi ullam ut. Atque dicta hic inventore.</p>
-
-            <p>Accusamus architecto asperiores aspernatur at beatae esse et eveniet excepturi, explicabo id impedit ipsa
-                laborum minima natus necessitatibus nihil pariatur placeat quasi quibusdam quod quos ratione
-                repellendus, reprehenderit suscipit tempora unde veniam veritatis voluptate voluptatem voluptates.
-                Eveniet minus quaerat vitae!</p>
-        </div>
-        <div>
-            <h2>Proposer un QCM</h2>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci architecto assumenda earum eum,
-                facilis illum iusto nam nisi quas saepe similique tempora totam ullam! Assumenda beatae deserunt eius
-                error facere obcaecati odit omnis, provident quae quis! Debitis eaque ex iure.</p>
-
-            <p>At corporis eum laborum reprehenderit sapiente! Accusamus alias aliquid aperiam assumenda corporis,
-                dolore eaque eligendi eveniet exercitationem id incidunt inventore labore maxime mollitia nesciunt,
-                placeat porro praesentium qui quidem quo repellat, reprehenderit sequi! Deserunt eos minus obcaecati
-                quam repellendus vel.</p>
-        </div>
+        <h2 class="header">Lorem ipsum dolor sit amet, consectetur adipisicing.</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque error est excepturi, molestias officiis
+            praesentium, quam quas quia quidem recusandae, sint sit tenetur! Accusamus alias aperiam at beatae culpa,
+            cupiditate dolor earum eos, est ipsum maiores minima modi molestias quia rem repellat repudiandae rerum sed
+            soluta tempora? Assumenda atque cumque dolor dolorem ducimus eveniet excepturi expedita facere fuga
+            inventore laudantium maiores, mollitia optio reiciendis sunt vero vitae! Accusantium architecto assumenda
+            consectetur culpa, cumque dicta distinctio ducimus expedita id labore laudantium maiores nemo neque nihil
+            numquam odio omnis provident quae quaerat quod sequi suscipit veritatis vero voluptate voluptatibus! Eum,
+            odio tempore.</p>
+        <p>Amet dolorum earum nemo recusandae repudiandae tempora. Dolore enim id ipsum, maiores molestiae nesciunt
+            odit, officiis perferendis provident, quam quis sapiente. Ab assumenda error esse, explicabo facilis iste
+            iure labore nostrum optio perspiciatis, quia quisquam repellat repellendus, sint sit sunt vero. Ad amet
+            aperiam asperiores aspernatur assumenda beatae consequatur debitis deserunt distinctio dolore doloremque
+            dolores enim error eum fuga fugit impedit iusto, labore maxime minima nam natus non perspiciatis quod quos
+            ratione repellendus repudiandae sed sint sit temporibus tenetur ullam vitae? Animi delectus dicta
+            distinctio, ducimus ea exercitationem facere in ipsam modi mollitia nemo provident veritatis vero.
+            Distinctio, laborum, omnis?</p>
     </div>
-
 @endsection

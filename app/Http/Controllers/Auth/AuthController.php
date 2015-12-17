@@ -107,4 +107,16 @@ class AuthController extends Controller
         Session::push('messages', 'success|Connexion réussie');
         return redirect()->intended($this->redirectPath());
     }
+
+    /**
+     * Déconnecte l'utilisateur
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function getLogout(Request $request) {
+        Session::push('messages', 'success|Vous avez bien été déconnecté');
+        Auth::logout();
+        return redirect('/');
+    }
 }

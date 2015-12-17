@@ -3,10 +3,14 @@ function displayAlert() {
     $ret = '';
 
     if(Session::has('messages')) {
+        $ret .= '<div class="alert-container">';
+
         foreach(Session::get('messages') as $k => $message) {
             list($type, $message) = explode('|', $message);
             $ret .= sprintf('<div class="alert alert-%s">%s</div>', $type, $message);
         }
+
+        $ret .= '</div>';
     }
 
     Session::forget('messages');
@@ -16,9 +20,9 @@ function displayAlert() {
 ?>
 
 @if (trim($__env->yieldContent('title')))
-    @section('title') | QCM @append
+    @section('title') | QCM.fr @append
 @else
-    @section('title', 'QCM')
+    @section('title', 'QCM.fr')
 @endif
 
 <!DOCTYPE html>
@@ -27,7 +31,7 @@ function displayAlert() {
         <title>{{ $__env->yieldContent('title') }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
-        <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}"  media="screen, projection"/>
+        <link type="text/css" rel="stylesheet" href="{{ elixir('css/app.css') }}"  media="screen, projection"/>
         @section('css')
         @show
     </head>
