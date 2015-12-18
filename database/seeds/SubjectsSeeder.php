@@ -17,15 +17,15 @@ class SubjectsSeeder extends Seeder
             "Structure de données et algorithmes fondamentaux",
             "Introductions aux bases de données",
             "Conception de documents et d'interfaces numériques",
-            "Projet tutoré - Découverte",
+            "Projet tutoré – Découverte",
 
             "Mathématiques discrètes",
             "Algèbre linéaire",
             "Environnement économique",
             "Fonctionnement des organisations",
-            "Expression-Communication - Fondamentaux de la communication",
+            "Expression-Communication – Fondamentaux de la communication",
             "Anglais",
-            "PPP - Connaître le monde professionnel",
+            "PPP – Connaître le monde professionnel",
 
             "Architecture et programmation des mécanismes de base d'un système informatique",
             "Architecture des réseaux",
