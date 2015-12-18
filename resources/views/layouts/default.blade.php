@@ -1,22 +1,7 @@
 <?php
-function displayAlert() {
-    $ret = '';
+require_once app_path('functions.php');
 
-    if(Session::has('messages')) {
-        $ret .= '<div class="alert-container">';
-
-        foreach(Session::get('messages') as $k => $message) {
-            list($type, $message) = explode('|', $message);
-            $ret .= sprintf('<div class="alert alert-%s">%s</div>', $type, $message);
-        }
-
-        $ret .= '</div>';
-    }
-
-    Session::forget('messages');
-
-    return $ret;
-}
+$user = Auth::user();
 ?>
 
 @if (trim($__env->yieldContent('title')))
@@ -28,7 +13,7 @@ function displayAlert() {
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <title>{{ $__env->yieldContent('title') }}</title>
+        <title>@yield('title')</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
         <link type="text/css" rel="stylesheet" href="{{ elixir('css/app.css') }}"  media="screen, projection"/>
@@ -45,7 +30,7 @@ function displayAlert() {
                     <div id="navigation__container">
                         <ul id="navigation__menu">
                             @if(Auth::check())
-                                <?php switch(Auth::user()['status']) {
+                                <?php switch($user['status']) {
                                     case 'student': { ?>
                                         <li><a href="#">Participer</a></li>
                                         <li><a href="#">Résultats</a></li>
@@ -62,8 +47,11 @@ function displayAlert() {
                         </ul>
                         <ul id="user__menu">
                             @if(Auth::check())
+                                <?php $status = trans('messages.' . $user['status']); ?>
                                 <li>
-                                    <b>{{ Auth::user()['first_name'] }} {{ Auth::user()['last_name'] }}</b><br>
+                                    <b>{{ $user['first_name'] }} {{ $user['last_name'] }}
+                                        (<span title="{{ $status }}">{{ str_limit($status, 4, '.') }}</span>)
+                                    </b><br>
                                     <small><a href="{{ route('auth::logout') }}" class="">Se déconnecter</a></small>
                                 </li>
                             @else
