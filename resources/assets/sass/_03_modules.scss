@@ -1,5 +1,9 @@
 @import "resources/assets/sass/components/types";
 
+textarea {
+  resize: vertical;
+}
+
 .alert-container {
   margin: 0 -2em;
 
@@ -7,4 +11,46 @@
     border-radius: 0;
     margin-bottom: -1px;
   }
+}
+
+.table-qcm {
+  @extend .table, .table-hover, .table-condensed;
+
+  .table-qcm__valid {
+    width: 90px;
+
+    .radio {
+      @extend .text-center;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .table-qcm__answer {
+
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.btn-add-question {
+  @extend .btn, .btn-default, .btn-lg;
+}
+
+.btn-remove-question{
+  @extend .pull-right, .glyphicon;
+
+  cursor: pointer;
+  opacity: .5;
+  transition: opacity .1s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+}
+
+.btn-create-qcm {
+  @extend .btn, .btn-primary, .btn-lg;
 }

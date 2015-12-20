@@ -14,24 +14,25 @@
 @section('title', $title)
 
 @section('content')
-        <h2 class="header">{{ $title }}</h2>
-        <hr>
+    <h2 class="header">{{ $title }}</h2>
+    <hr>
 
-        {!! BootForm::openHorizontal($columnSizes)
-            ->action(route('auth::login')) !!}
+    {!! BootForm::openHorizontal($columnSizes)
+        ->action(route('auth::login')) !!}
 
-            <p>Les champs précédés par le signe &laquo;<sub style="font-size: 16px"><?= $requiredField ?></sub> &raquo; doivent obligatoirement être renseignés.</p>
-            <br>
+        <p class="alert alert-info">Les champs marqué d'un astérisque &laquo;<sub style="font-size: 16px"><?= $requiredField ?></sub> &raquo; sont obligatoires.</p>
 
-            {!! BootForm::text('Adresse e-mail' . $requiredField, 'email')
-                ->required()
-                ->placeholder('adresse@exemple.com') !!}
+        <br>
 
-            {!! BootForm::password('Mot de passe' . $requiredField, 'password')
-                ->required() !!}
+        {!! BootForm::text('Adresse e-mail' . $requiredField, 'email')
+            ->required()
+            ->placeholder('adresse@exemple.com') !!}
 
-            {!! BootForm::submit('Se connecter')
-                ->class('btn btn-primary') !!}
+        {!! BootForm::password('Mot de passe' . $requiredField, 'password')
+            ->required() !!}
 
-        {!! BootForm::close() !!}
+        {!! BootForm::submit('Se connecter')
+            ->class('btn btn-primary') !!}
+
+    {!! BootForm::close() !!}
 @endsection

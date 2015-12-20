@@ -77,14 +77,9 @@ $user = Auth::user();
             </div>
         </footer>
 
-        <!-- http://techably.com/chrome-font-size-bug-fix/11996/ -->
-        <script>
-            document.getElementsByTagName('html')[0].style.fontSize = '62.5%';
-            document.body.style.fontSize = '1.6rem';
-        </script>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="{{ asset('js/font-size-bug.fix.js') }}"></script>
         @section('js')
         @show
-
-        {{--<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>--}}
     </body>
 </html>
