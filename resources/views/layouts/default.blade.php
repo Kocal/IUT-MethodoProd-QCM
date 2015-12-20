@@ -16,7 +16,7 @@ $user = Auth::user();
         <title>@yield('title')</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
-        <link type="text/css" rel="stylesheet" href="{{ elixir('css/app.css') }}"  media="screen, projection"/>
+        <link type="text/css" rel="stylesheet" href="{{ asset(elixir('css/app.css')) }}"  media="screen, projection"/>
         @section('css')
         @show
     </head>
