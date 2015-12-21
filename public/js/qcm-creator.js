@@ -92,6 +92,13 @@ QCM.prototype.init = function() {
     this.$form.on('click', this.selectors.btnRemoveQuestion, function(e) {
         self.deleteQuestion.apply(self, [e, $(this)]);
     })
+
+    $(document).on('submit', this.selectors.form, function(e) {
+       if(self.options.questionNumber < 1) {
+           e.preventDefault();
+           return alert("Le QCM doit être constitué d'au moins une question");
+       }
+    });
 };
 
 /**
@@ -140,6 +147,11 @@ QCM.prototype.addQuestion = function(event, animation) {
 QCM.prototype.deleteQuestion = function(event, $el) {
     var $question = $el.parents('.question');
     var $nextQuestion = $question.next();
+
+    // Le QCM doit avoir au minimum une question
+    if(this.options.questionNumber - 1 <= 0) {
+        return alert("Le QCM doit être constitué d'au moins une question");
+    }
 
     $question.slideUp(250, function() {
         $(this).remove();
