@@ -21,7 +21,7 @@
                 <?= BootForm::radio('', 'valids_answers[{{questionNumber}}]', '{{.}}')->required(); ?>
             </td>
             <td class="table-qcm__answer">
-                <?= BootForm::text('', 'answers[@{{questionNumber}}][]')->hideLabel()->required(); ?>
+                <?= BootForm::text('', 'answers[{{questionNumber}}][]')->hideLabel()->required(); ?>
             </td>
         </tr>
         {{/answers}}
