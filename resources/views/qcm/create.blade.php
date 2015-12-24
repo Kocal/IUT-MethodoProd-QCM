@@ -1,12 +1,19 @@
 <?php
-    $title = "Création d'un nouveau QCM";
+$mustache = new Mustache_Engine(); // aaaaaa ué !!^^^
 
-    $columnSizes = [
-        'sm' => [4, 8],
-        'lg' => [3, 9]
-    ];
+BootForm::open(); // best hack mdr :-)))
 
-    $requiredField = ' <sup style="color: #f00">*</sup>';
+$title = "Création d'un nouveau QCM";
+
+$columnSizes = [
+    'sm' => [4, 8],
+    'lg' => [3, 9]
+];
+
+$requiredField = ' <sup style="color: #f00">*</sup>';
+
+$answers = 3; // 3 réponses par questions
+$questions = 3; // 3 questions affichées par défaut
 ?>
 
 @extends('layouts.default')
@@ -18,62 +25,55 @@
     <hr>
 
     {!! BootForm::open()->id('qcm-creator') !!}
-    <p class="alert alert-info">Les champs marqué d'un astérisque &laquo;<sub style="font-size: 16px"><?= $requiredField ?></sub> &raquo; sont obligatoires.</p>
+    <p class="alert alert-info">Les champs marqué d'un astérisque &laquo;<sub
+                style="font-size: 16px"><?= $requiredField ?></sub> &raquo; sont obligatoires.</p>
 
     {!! BootForm::text('Nom du QCM' . $requiredField, 'name')->required() !!}
-        {!! BootForm::textarea('Description du QCM' . $requiredField, 'description')->rows(3)->required() !!}
-        {!! BootForm::select('Matière associée' . $requiredField, 'subject_id')->options($subjectsList)->required() !!}
-        <div id="questions-container"></div>
+    {!! BootForm::textarea('Description du QCM' . $requiredField, 'description')->rows(3)->required() !!}
+    {!! BootForm::select('Matière associée' . $requiredField, 'subject_id')->options($subjectsList)->required() !!}
 
-        <hr>
-        <div class="text-center">
-            <button type="button" class="btn-add-question">
-                <span class="glyphicon glyphicon-plus-sign"></span> Ajouter une question
-            </button>
+    <div id="questions-container">
+        {{-- On récupère le template "Mustache" des questions --}}
+        <?php ob_start(); ?>
+        @include('partials.mustache_template_question')
+        <?php $template = ob_get_clean(); ?>
 
-            {!! BootForm::submit('Créer le QCM', 'btn-create-qcm') !!}
+        {{-- BLADE & MUSTACHE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA --}}
+        @for($question = 0; $question < $questions; $question++)
+            {!! $mustache->render($template, [
+                'questionNumber' => $question,
+                'questionNumberDisplay' => $question + 1,
+                'answers' => range(0, $answers - 1)
+            ]) !!}
+        @endfor
+    </div>
 
-        </div>
+    <hr>
+
+    <div class="text-center">
+        <button type="button" class="btn-add-question">
+            <span class="glyphicon glyphicon-plus-sign"></span> Ajouter une question
+        </button>
+
+        {!! BootForm::submit('Créer le QCM', 'btn-create-qcm') !!}
+    </div>
+
     {!! BootForm::close() !!}
 @endsection
 
+
 @section('js')
     <script id="template-question" type="x-tmpl-mustache">
-        <fieldset>
-            <legend>Question n°<span class="questionNumberDisplay">@{{ questionNumberDisplay }} {!! $requiredField !!}</span>
-                <span title="Supprimer la question n°@{{ questionNumberDisplay }}" class="btn-remove-question glyphicon-remove""></span>
-            </legend>
-            {!! BootForm::textarea('Énoncé' . $requiredField, 'questions[ @{{ questionNumber }} ]')->rows(2)->required() !!}
-
-            <table class="table-qcm table-responsive">
-                <thead>
-                    <tr>
-                        <th class="text-center">Bonne réponse {!! $requiredField !!}</th>
-                        <th>Réponses {!! $requiredField !!}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{{ #answers }}
-                        <tr>
-                            <td class="table-qcm__valid">
-                                {!! BootForm::radio('', 'valids_answers[@{{ questionNumber }}]', '@{{ . }}')->required() !!}
-                            </td>
-                            <td class="table-qcm__answer">
-                                {!! BootForm::text('', 'answers[@{{ questionNumber }}][]')->hideLabel()->required() !!}
-                            </td>
-                        </tr>
-                    @{{ /answers }}
-                </tbody>
-            </table>
-        </fieldset>
+         {!! $template !!}
     </script>
 
     <script>
         var qcm;
 
-        (function($) {
+        (function ($) {
             qcm = new QCM({
-                answersNumberPerQuestion: 3
+                answersNumberPerQuestion: {{ $answers }},
+                questionsNumber: {{ $questions }}
             }, {
                 form: '#qcm-creator',
                 container: '#questions-container',

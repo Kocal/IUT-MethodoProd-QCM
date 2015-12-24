@@ -9849,12 +9849,11 @@ QCM = (function() {
     var i, ref, results;
     this.answers = (function() {
       results = [];
-      for (var i = 0, ref = this.options.answersNumberPerQuestion; 0 <= ref ? i <= ref : i >= ref; 0 <= ref ? i++ : i--){ results.push(i); }
+      for (var i = 0, ref = this.options.answersNumberPerQuestion; 0 <= ref ? i < ref : i > ref; 0 <= ref ? i++ : i--){ results.push(i); }
       return results;
     }).apply(this);
     this._setUpSelectors();
     this._parseTemplate();
-    this._setUpDefaultQuestions();
     this._setUpEvents();
   };
 

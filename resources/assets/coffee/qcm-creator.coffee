@@ -21,10 +21,10 @@ class QCM
         return
 
     init: ->
-        @answers = [ 0..@options.answersNumberPerQuestion ]
+        @answers = [ 0...@options.answersNumberPerQuestion ]
         @_setUpSelectors()
         @_parseTemplate()
-        @_setUpDefaultQuestions()
+        #@_setUpDefaultQuestions()
         @_setUpEvents()
 
         return
