@@ -38,13 +38,12 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/mustache.min.js') }}"></script>
     <script id="template-question" type="x-tmpl-mustache">
         <fieldset>
             <legend>Question n°<span class="questionNumberDisplay">@{{ questionNumberDisplay }} {!! $requiredField !!}</span>
                 <span title="Supprimer la question n°@{{ questionNumberDisplay }}" class="btn-remove-question glyphicon-remove""></span>
             </legend>
-            {!! BootForm::textarea('Énoncé' . $requiredField, 'question[ @{{ questionNumber }} ]')->rows(2)->required() !!}
+            {!! BootForm::textarea('Énoncé' . $requiredField, 'questions[ @{{ questionNumber }} ]')->rows(2)->required() !!}
 
             <table class="table-qcm table-responsive">
                 <thead>
@@ -57,10 +56,10 @@
                     @{{ #answers }}
                         <tr>
                             <td class="table-qcm__valid">
-                                {!! BootForm::radio('', 'valid[ @{{ questionNumber }} ]', '@{{ . }}')->required() !!}
+                                {!! BootForm::radio('', 'valids_answers[@{{ questionNumber }}]', '@{{ . }}')->required() !!}
                             </td>
                             <td class="table-qcm__answer">
-                                {!! BootForm::text('', 'answer[ @{{ questionNumber }} ][]')->hideLabel()->required() !!}
+                                {!! BootForm::text('', 'answers[@{{ questionNumber }}][]')->hideLabel()->required() !!}
                             </td>
                         </tr>
                     @{{ /answers }}
@@ -69,10 +68,13 @@
         </fieldset>
     </script>
 
-    <script src="{{ asset('js/qcm-creator.js') }}"></script>
     <script>
-        (function($) {;
-            var qcm = new QCM({}, {
+        var qcm;
+
+        (function($) {
+            qcm = new QCM({
+                answersNumberPerQuestion: 3
+            }, {
                 form: '#qcm-creator',
                 container: '#questions-container',
                 template: '#template-question',

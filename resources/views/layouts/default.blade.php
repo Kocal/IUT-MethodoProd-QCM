@@ -16,7 +16,7 @@ $user = Auth::user();
         <title>@yield('title')</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
-        <link type="text/css" rel="stylesheet" href="{{ asset(elixir('css/app.css')) }}"  media="screen, projection"/>
+        <link type="text/css" rel="stylesheet" href="{{ asset(elixir('css/all.css')) }}"  media="screen, projection"/>
         @section('css')
         @show
     </head>
@@ -77,8 +77,7 @@ $user = Auth::user();
             </div>
         </footer>
 
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="{{ asset('js/font-size-bug.fix.js') }}"></script>
+        <script src="{{ asset(elixir('js/all.js')) }}"></script>
         @section('js')
         @show
     </body>
