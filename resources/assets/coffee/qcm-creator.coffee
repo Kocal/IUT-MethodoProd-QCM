@@ -18,12 +18,15 @@ class QCM
         @options = Object.assign {}, @options, options;
         @selectors = Object.assign {}, @selectors, selectors;
 
+        return
+
     init: ->
         @answers = [ 0..@options.answersNumberPerQuestion ]
         @_setUpSelectors()
         @_parseTemplate()
         @_setUpDefaultQuestions()
         @_setUpEvents()
+
         return
 
     _setUpSelectors: ->
@@ -33,6 +36,7 @@ class QCM
         setup selector for selector in Object.keys(@selectors)
 
         @$body = $ document.body
+
         return
 
     _parseTemplate: ->
@@ -40,6 +44,7 @@ class QCM
 
     _setUpDefaultQuestions: ->
         @addQuestion(null, false) for [ 0...@options.defaultQuestionsNumber ]
+        return
 
     _setUpEvents: ->
         @$form.on 'click', @selectors.btnAddQuestion, (event) =>
@@ -52,6 +57,8 @@ class QCM
             if(@options.questionsNumber < 1)
                 event.preventDefault()
                 alert @messages.NOT_ENOUGH_QUESTIONS
+
+        return
 
     addQuestion: (event, animate) ->
         $div = $ '<div>'
@@ -74,6 +81,8 @@ class QCM
 
         @options.questionsNumber++
 
+        return
+
     deleteQuestion: (event) ->
         $element = $ event.currentTarget
         $question = $element.parents '.question'
@@ -81,7 +90,7 @@ class QCM
 
         if @options.questionNumber - 1 <= 0
             event.preventDefault()
-            alert @messages.NOT_ENOUGH_QUESTIONS
+            return alert @messages.NOT_ENOUGH_QUESTIONS
 
         @options.questionsNumber--
 
@@ -92,3 +101,5 @@ class QCM
             $nextQuestion.data 'question', newId
             $nextQuestion.find('.questionNumberDisplay').text newId + 1
             $nextQuestion = $nextQuestion.find()
+
+        return

@@ -9842,6 +9842,7 @@ QCM = (function() {
     };
     this.options = Object.assign({}, this.options, options);
     this.selectors = Object.assign({}, this.selectors, selectors);
+    return;
   }
 
   QCM.prototype.init = function() {
@@ -9877,12 +9878,10 @@ QCM = (function() {
   };
 
   QCM.prototype._setUpDefaultQuestions = function() {
-    var i, ref, results;
-    results = [];
+    var i, ref;
     for (i = 0, ref = this.options.defaultQuestionsNumber; 0 <= ref ? i < ref : i > ref; 0 <= ref ? i++ : i--) {
-      results.push(this.addQuestion(null, false));
+      this.addQuestion(null, false);
     }
-    return results;
   };
 
   QCM.prototype._setUpEvents = function() {
@@ -9896,7 +9895,7 @@ QCM = (function() {
         return _this.deleteQuestion.apply(_this, [event]);
       };
     })(this));
-    return $(document).on('submit', this.selectors.form, (function(_this) {
+    $(document).on('submit', this.selectors.form, (function(_this) {
       return function(event) {
         if (_this.options.questionsNumber < 1) {
           event.preventDefault();
@@ -9921,28 +9920,26 @@ QCM = (function() {
     } else {
       $div.show();
     }
-    return this.options.questionsNumber++;
+    this.options.questionsNumber++;
   };
 
   QCM.prototype.deleteQuestion = function(event) {
-    var $element, $nextQuestion, $question, newId, results;
+    var $element, $nextQuestion, $question, newId;
     $element = $(event.currentTarget);
     $question = $element.parents('.question');
     $nextQuestion = $question.next();
     if (this.options.questionNumber - 1 <= 0) {
       event.preventDefault();
-      alert(this.messages.NOT_ENOUGH_QUESTIONS);
+      return alert(this.messages.NOT_ENOUGH_QUESTIONS);
     }
     this.options.questionsNumber--;
     $question.slideUp(250, $question.remove);
-    results = [];
     while ($nextQuestion.length !== 0) {
       newId = parseInt($nextQuestion.data('question', 10)) - 1;
       $nextQuestion.data('question', newId);
       $nextQuestion.find('.questionNumberDisplay').text(newId + 1);
-      results.push($nextQuestion = $nextQuestion.find());
+      $nextQuestion = $nextQuestion.find();
     }
-    return results;
   };
 
   return QCM;
