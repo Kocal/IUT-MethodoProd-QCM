@@ -94,7 +94,8 @@ class QCM
 
         @options.questionsNumber--
 
-        $question.slideUp 250, $question.remove
+        $question.slideUp 250, ->
+            $question.remove()
 
         while $nextQuestion.length != 0
             newId = parseInt($nextQuestion.data 'question', 10) - 1

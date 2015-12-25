@@ -40,11 +40,13 @@ $questions = 3; // 3 questions affichées par défaut
 
         {{-- BLADE & MUSTACHE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA --}}
         @for($question = 0; $question < $questions; $question++)
+            <div class="question">
             {!! $mustache->render($template, [
                 'questionNumber' => $question,
                 'questionNumberDisplay' => $question + 1,
                 'answers' => range(0, $answers - 1)
             ]) !!}
+            </div>
         @endfor
     </div>
 
