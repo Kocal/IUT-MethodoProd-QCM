@@ -24,7 +24,7 @@ class QcmController extends Controller
     {
         $subjectsList = Subject::toList();
 
-        return view('qcm.create', compact('subjectsList'));
+        return view('qcm.teacher.create', compact('subjectsList'));
     }
 
     public function postCreate(Request $request)
