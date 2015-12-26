@@ -38,7 +38,7 @@ textarea {
   @extend .btn, .btn-default, .btn-lg;
 }
 
-.btn-remove-question{
+.btn-remove-question {
   @extend .pull-right, .glyphicon;
 
   cursor: pointer;
@@ -53,4 +53,10 @@ textarea {
 
 .btn-create-qcm {
   @extend .btn, .btn-primary, .btn-lg;
+}
+
+.qcm__metas {
+    @extend small;
+    font-style: italic;
+    color: grey;
 }

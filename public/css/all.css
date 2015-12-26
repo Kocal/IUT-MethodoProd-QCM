@@ -84,7 +84,8 @@ mark {
   color: #000;
 }
 
-small {
+small,
+.qcm__metas {
   font-size: 80%;
 }
 
@@ -1522,28 +1523,40 @@ h6,
 }
 
 h1 small,
+h1 .qcm__metas,
 h1 .small,
 h2 small,
+h2 .qcm__metas,
 h2 .small,
 h3 small,
+h3 .qcm__metas,
 h3 .small,
 h4 small,
+h4 .qcm__metas,
 h4 .small,
 h5 small,
+h5 .qcm__metas,
 h5 .small,
 h6 small,
+h6 .qcm__metas,
 h6 .small,
 .h1 small,
+.h1 .qcm__metas,
 .h1 .small,
 .h2 small,
+.h2 .qcm__metas,
 .h2 .small,
 .h3 small,
+.h3 .qcm__metas,
 .h3 .small,
 .h4 small,
+.h4 .qcm__metas,
 .h4 .small,
 .h5 small,
+.h5 .qcm__metas,
 .h5 .small,
 .h6 small,
+.h6 .qcm__metas,
 .h6 .small {
   font-weight: normal;
   line-height: 1;
@@ -1561,16 +1574,22 @@ h3,
 }
 
 h1 small,
+h1 .qcm__metas,
 h1 .small,
 .h1 small,
+.h1 .qcm__metas,
 .h1 .small,
 h2 small,
+h2 .qcm__metas,
 h2 .small,
 .h2 small,
+.h2 .qcm__metas,
 .h2 .small,
 h3 small,
+h3 .qcm__metas,
 h3 .small,
 .h3 small,
+.h3 .qcm__metas,
 .h3 .small {
   font-size: 65%;
 }
@@ -1586,16 +1605,22 @@ h6,
 }
 
 h4 small,
+h4 .qcm__metas,
 h4 .small,
 .h4 small,
+.h4 .qcm__metas,
 .h4 .small,
 h5 small,
+h5 .qcm__metas,
 h5 .small,
 .h5 small,
+.h5 .qcm__metas,
 .h5 .small,
 h6 small,
+h6 .qcm__metas,
 h6 .small,
 .h6 small,
+.h6 .qcm__metas,
 .h6 .small {
   font-size: 75%;
 }
@@ -1648,6 +1673,7 @@ p {
 }
 
 small,
+.qcm__metas,
 .small {
   font-size: 85%;
 }
@@ -1896,6 +1922,7 @@ blockquote ol:last-child {
 
 blockquote footer,
 blockquote small,
+blockquote .qcm__metas,
 blockquote .small {
   display: block;
   font-size: 80%;
@@ -1905,6 +1932,7 @@ blockquote .small {
 
 blockquote footer:before,
 blockquote small:before,
+blockquote .qcm__metas:before,
 blockquote .small:before {
   content: '\2014 \00A0';
 }
@@ -1921,11 +1949,14 @@ blockquote.btn-remove-question {
 
 .blockquote-reverse footer:before,
 .blockquote-reverse small:before,
+.blockquote-reverse .qcm__metas:before,
 .blockquote-reverse .small:before,
 blockquote.pull-right footer:before,
 blockquote.btn-remove-question footer:before,
 blockquote.pull-right small:before,
 blockquote.btn-remove-question small:before,
+blockquote.pull-right .qcm__metas:before,
+blockquote.btn-remove-question .qcm__metas:before,
 blockquote.pull-right .small:before,
 blockquote.btn-remove-question .small:before {
   content: '';
@@ -1933,11 +1964,14 @@ blockquote.btn-remove-question .small:before {
 
 .blockquote-reverse footer:after,
 .blockquote-reverse small:after,
+.blockquote-reverse .qcm__metas:after,
 .blockquote-reverse .small:after,
 blockquote.pull-right footer:after,
 blockquote.btn-remove-question footer:after,
 blockquote.pull-right small:after,
 blockquote.btn-remove-question small:after,
+blockquote.pull-right .qcm__metas:after,
+blockquote.btn-remove-question .qcm__metas:after,
 blockquote.pull-right .small:after,
 blockquote.btn-remove-question .small:after {
   content: '\00A0 \2014';
@@ -7058,12 +7092,15 @@ button.list-group-item {
 
 .list-group-item.active .list-group-item-heading,
 .list-group-item.active .list-group-item-heading > small,
+.list-group-item.active .list-group-item-heading > .qcm__metas,
 .list-group-item.active .list-group-item-heading > .small,
 .list-group-item.active:hover .list-group-item-heading,
 .list-group-item.active:hover .list-group-item-heading > small,
+.list-group-item.active:hover .list-group-item-heading > .qcm__metas,
 .list-group-item.active:hover .list-group-item-heading > .small,
 .list-group-item.active:focus .list-group-item-heading,
 .list-group-item.active:focus .list-group-item-heading > small,
+.list-group-item.active:focus .list-group-item-heading > .qcm__metas,
 .list-group-item.active:focus .list-group-item-heading > .small {
   color: inherit;
 }
@@ -7262,8 +7299,10 @@ button.list-group-item-danger.active:focus {
 
 .panel-title > a,
 .panel-title > small,
+.panel-title > .qcm__metas,
 .panel-title > .small,
 .panel-title > small > a,
+.panel-title > .qcm__metas > a,
 .panel-title > .small > a {
   color: inherit;
 }
@@ -8991,6 +9030,11 @@ textarea {
 
 .btn-remove-question:hover {
   opacity: 1;
+}
+
+.qcm__metas {
+  font-style: italic;
+  color: grey;
 }
 
 html,

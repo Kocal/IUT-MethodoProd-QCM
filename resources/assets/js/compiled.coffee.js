@@ -124,4 +124,12 @@ QCM = (function() {
 
 })();
 
+(function($) {
+  return $(document).on('click', '.delete-qcm', function(event) {
+    var $title;
+    $title = $(this).parents('.qcm').find('.qcm__title');
+    return confirm('Êtes-vous sûr de vouloir supprimer le QCM « ' + $.trim($title.text() + ' » ?'));
+  });
+})(jQuery);
+
 //# sourceMappingURL=compiled.coffee.js.map
