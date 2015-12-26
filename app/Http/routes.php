@@ -47,5 +47,8 @@ Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
 
         // Traitement pour la création du QCM
         Route::post('create', ['as' => 'create', 'uses' => 'QcmController@postCreate']);
+
+        // Affiche les QCM créés par le professeur
+        Route::get('mine', ['as' => 'mine', 'uses'=> 'QcmController@getMine']);
     });
 });

@@ -76,8 +76,19 @@ class QcmController extends Controller
             Session::push('messages', 'success|Votre QCM a bien été créé');
             return redirect()->route('qcm::mine');
         } else {
-            Session::push('messages', "danger|Le QCm n'a pas été créé");
+            Session::push('messages', "danger|Le QCM n'a pas été créé");
             return redirect(URL::previous());
         }
+    }
+
+    public function getMine() {
+        $qcms = Qcm::where('user_id', Auth::id())
+            ->with('subject')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+
+        $qcms->setPath(route('qcm::mine'));
+
+        return view('qcm.teacher.mine')->with(compact('qcms'));
     }
 }
