@@ -32,15 +32,15 @@ $user = Auth::user();
                             @if(Auth::check())
                                 <?php switch($user['status']) {
                                     case 'student': { ?>
-                                        <li><a href="#">Participer</a></li>
-                                        <li><a href="#">Résultats</a></li>
-                                    <?php break;
-                                    }
+                                        <li><h4><a href="#">Participer</a></h4></li>
+                                        <li><h4><a href="#">Résultats</a></h4></li>
+                                    <?php break; }
+
                                     case 'teacher': { ?>
-                                        <li><a href="#">Voir mes QCM</a></li>
-                                        <li><a href="{{ route('qcm::create') }}">Créer un QCM</a></li>
-                                    <?php break;
-                                    }
+                                        <li><h4><a href="{{ route('qcm::mine') }}">Voir mes QCM</a></h4></li>
+                                        <li><h4><a href="{{ route('qcm::create') }}">Créer un QCM</a></h4></li>
+                                    <?php break; }
+
                                     default:
                                 } ?>
                             @endif
