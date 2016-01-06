@@ -15,7 +15,7 @@ class CreateParticipationsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('question_id')->unsigned();
-            $table->integer('response_id')->unsigned();
+            $table->integer('answer_id')->unsigned();
         });
     }
 
