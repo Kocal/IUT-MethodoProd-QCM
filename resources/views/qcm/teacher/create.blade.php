@@ -40,7 +40,7 @@ $questions = 3; // 3 questions affichées par défaut
 
         {{-- BLADE & MUSTACHE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA --}}
         @for($question = 0; $question < $questions; $question++)
-            <div class="question">
+            <div class="question" data-question="{{ $question }}">
             {!! $mustache->render($template, [
                 'questionNumber' => $question,
                 'questionNumberDisplay' => $question + 1,
