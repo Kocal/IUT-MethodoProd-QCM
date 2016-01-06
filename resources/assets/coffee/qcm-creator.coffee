@@ -62,7 +62,7 @@ class QCM
 
     addQuestion: (event, animate) ->
         $div = $ '<div>'
-        .data 'question', @options.questionsNumber
+        .attr 'data-question', @options.questionsNumber
         .addClass 'question'
         .hide()
         .html Mustache.render @$template.html(),
@@ -98,9 +98,10 @@ class QCM
             $question.remove()
 
         while $nextQuestion.length != 0
-            newId = parseInt($nextQuestion.data 'question', 10) - 1
-            $nextQuestion.data 'question', newId
+            newId = parseInt($nextQuestion.attr('data-question'), 10) - 1
+
+            $nextQuestion.attr 'data-question', newId
             $nextQuestion.find('.questionNumberDisplay').text newId + 1
-            $nextQuestion = $nextQuestion.find()
+            $nextQuestion = $nextQuestion.next()
 
         return

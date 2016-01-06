@@ -83,7 +83,7 @@ QCM = (function() {
 
   QCM.prototype.addQuestion = function(event, animate) {
     var $div;
-    $div = $('<div>').data('question', this.options.questionsNumber).addClass('question').hide().html(Mustache.render(this.$template.html(), {
+    $div = $('<div>').attr('data-question', this.options.questionsNumber).addClass('question').hide().html(Mustache.render(this.$template.html(), {
       questionNumber: this.options.questionsNumber,
       questionNumberDisplay: this.options.questionsNumber + 1,
       answers: this.answers
@@ -113,10 +113,10 @@ QCM = (function() {
       return $question.remove();
     });
     while ($nextQuestion.length !== 0) {
-      newId = parseInt($nextQuestion.data('question', 10)) - 1;
-      $nextQuestion.data('question', newId);
+      newId = parseInt($nextQuestion.attr('data-question'), 10) - 1;
+      $nextQuestion.attr('data-question', newId);
       $nextQuestion.find('.questionNumberDisplay').text(newId + 1);
-      $nextQuestion = $nextQuestion.find();
+      $nextQuestion = $nextQuestion.next();
     }
   };
 
