@@ -12,6 +12,10 @@ $title = 'Mes QCM';
     <h2 class="header">{{ $title }}</h2>
     <hr>
 
+    @if(count($qcms) === 0)
+        <p class="alert alert-info">Vous n'avez créé aucun QCM pour l'instant.</p>
+    @endif
+
     @foreach($qcms as $qcm)
         <div class="qcm">
             <h3 class="qcm__title">{{ $qcm->name }}</h3>
@@ -36,7 +40,7 @@ $title = 'Mes QCM';
                     </a>
                 </div>
                 <div class="col-sm-4 text-left">
-                    <a href="#" class="btn btn-danger delete-qcm">
+                    <a href="{{ route('qcm::delete', ['id' => $qcm->id]) }}" class="btn btn-danger delete-qcm">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         Supprimer
                     </a>

@@ -50,5 +50,8 @@ Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
 
         // Affiche les QCM créés par le professeur
         Route::get('mine', ['as' => 'mine', 'uses'=> 'QcmController@getMine']);
+
+        Route::get('delete/{id}', ['as' => 'delete', 'uses' => 'QcmController@delete'])
+            ->where('id', '[0-9]+');
     });
 });

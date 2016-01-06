@@ -17,7 +17,6 @@ class QcmController extends Controller
 
     public function index()
     {
-
     }
 
     public function getCreate()
@@ -29,7 +28,6 @@ class QcmController extends Controller
 
     public function postCreate(Request $request)
     {
-
         $this->validate($request, [
             'name'           => 'required|string',
             'description'    => 'required|string',
@@ -50,21 +48,21 @@ class QcmController extends Controller
                 'description' => $datas['description'],
             ]);
 
-            foreach($datas['questions'] as $q => $question) {
+            foreach ($datas['questions'] as $q => $question) {
 
                 // Création des questions associées au QCM !!§
                 $question = Question::create([
-                    'qcm_id' => $qcm->id,
-                    'question' => $question
+                    'qcm_id'   => $qcm->id,
+                    'question' => $question,
                 ]);
 
-                foreach($datas['answers'][$q] as $a => $answer) {
+                foreach ($datas['answers'][ $q ] as $a => $answer) {
 
                     // Création des réponses associées aux questions !§§
                     $answer = Answer::create([
                         'question_id' => $question->id,
-                        'answer' => $answer,
-                        'isValid' => (int) $datas['valids_answers'][$q] === $a
+                        'answer'      => $answer,
+                        'isValid'     => (int)$datas['valids_answers'][ $q ] === $a,
                     ]);
                 }
             }
@@ -72,16 +70,19 @@ class QcmController extends Controller
             return $qcm;
         });
 
-        if($qcm != null) {
+        if ($qcm != null) {
             Session::push('messages', 'success|Votre QCM a bien été créé');
+
             return redirect()->route('qcm::mine');
         } else {
             Session::push('messages', "danger|Le QCM n'a pas été créé");
+
             return redirect(URL::previous());
         }
     }
 
-    public function getMine() {
+    public function getMine()
+    {
         $qcms = Qcm::where('user_id', Auth::id())
             ->with('subject')
             ->orderBy('created_at', 'desc')
@@ -90,5 +91,47 @@ class QcmController extends Controller
         $qcms->setPath(route('qcm::mine'));
 
         return view('qcm.teacher.mine')->with(compact('qcms'));
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $qcm = Qcm::where('id', $id)->with('user', 'questions')->first();
+
+        if(Auth::id() == $qcm->user->id) {
+
+
+            $ret = DB::transaction(function () use ($qcm) {
+
+                foreach($qcm->participations as $participation) {
+                    $participation->delete();
+                }
+
+                foreach ($qcm->questions as $question) {
+                    foreach($question->answers as $answer) {
+                        $answer->delete();
+                    }
+
+                    $question->delete();
+                }
+
+                $qcm->delete();
+
+                return true;
+            });
+
+            if($ret) {
+                Session::push('messages', 'success|Le QCM a bien été supprimé');
+            }
+            else {
+                Session::push('messages', "danger|Le QCM n'a pas été supprimé");
+            }
+
+            return redirect(route('qcm::mine'));
+
+        } else {
+            Session::push('messages', 'danger|Vous ne pouvez pas supprimer le QCM d\'un autre professeur');
+            Auth::logout();
+            return redirect(route('index'));
+        }
     }
 }

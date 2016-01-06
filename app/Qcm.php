@@ -11,4 +11,18 @@ class Qcm extends Model
     public function subject() {
         return $this->belongsTo('\App\Subject');
     }
+
+    public function user() {
+        return $this->belongsTo('\App\User');
+    }
+
+    public function questions() {
+        return $this->hasMany('\App\Question');
+    }
+
+    public function participations() {
+        // participations -> question -> qcm
+        return $this->hasManyThrough('\App\Participation', '\App\Question');
+    }
+
 }
