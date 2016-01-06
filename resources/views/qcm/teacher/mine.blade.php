@@ -34,7 +34,7 @@ $title = 'Mes QCM';
                     </a>
                 </div>
                 <div class="col-sm-4 text-center">
-                    <a href="#" class="btn btn-default">
+                    <a href="{{ route('qcm::edit', ['id' => $qcm->id]) }}" class="btn btn-default">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                         Modifier
                     </a>

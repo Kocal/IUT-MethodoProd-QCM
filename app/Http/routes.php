@@ -48,6 +48,14 @@ Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
         // Traitement pour la création du QCM
         Route::post('create', ['as' => 'create', 'uses' => 'QcmController@postCreate']);
 
+        // Affiche le formulaire d'édition de QCM
+        Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'QcmController@getEdit'])
+            ->where('id', '[0-9]+');
+
+        // Traitement pour l'édition du QCM
+        Route::post('edit/{id}', ['as' => 'edit', 'uses' => 'QcmController@postEdit'])
+            ->where('id', '[0-9]+');
+
         // Affiche les QCM créés par le professeur
         Route::get('mine', ['as' => 'mine', 'uses'=> 'QcmController@getMine']);
 

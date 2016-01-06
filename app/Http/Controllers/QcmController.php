@@ -81,6 +81,78 @@ class QcmController extends Controller
         }
     }
 
+    public function getEdit(Request $request, $id)
+    {
+        $qcm = Qcm::where('id', $id)->with('user', 'questions')->first();
+        $subjectsList = Subject::toList();
+
+        if (Auth::id() !== $qcm->user->id) {
+            Session::push('messages', "danger|Vous ne pouvez pas modifier un QCM qui n'est pas le votre");
+
+            return redirect()->route('qcm::mine');
+        }
+
+        return view('qcm.teacher.edit', compact('qcm', 'subjectsList'));
+    }
+
+    public function postEdit(Request $request, $id)
+    {
+        $qcm = Qcm::where('id', $id)->with('user', 'questions')->first();
+
+        if (Auth::id() === $qcm->user->id) {
+
+            $this->validate($request, [
+                'name'           => 'required|string',
+                'description'    => 'required|string',
+                'subject_id'     => 'required|in:' . implode(',', array_keys(Subject::toList())),
+                'questions'      => 'required|array',
+                'valids_answers' => 'required|array|size_array:questions|answer_exists:answers',
+                'answers'        => 'required|array',
+            ]);
+
+            $ret = DB::transaction(function () use ($request, $qcm) {
+
+                $datas = $request->all();
+                $questions = $qcm->questions;
+
+                $qcm->name = $datas['name'];
+                $qcm->description = $datas['description'];
+                $qcm->subject_id = $datas['subject_id'];
+                $qcm->update();
+
+                foreach ($questions as $q => $question) {
+
+                    $question->question = $datas['questions'][ $q ];
+                    $question->update();
+
+                    foreach ($question->answers as $a => $answer) {
+
+                        $answer->answer = $datas['answers'][ $q ][ $a ];
+                        $answer->isValid = ($datas['valids_answers'][ $q ] == $a);
+                        $answer->update();
+
+                    }
+                }
+
+                return true;
+            });
+
+            if ($ret) {
+                Session::push('messages', 'success|Le QCM a bien été modifié');
+            } else {
+                Session::push('messages', "danger|Le QCM n'a pas été modifié");
+            }
+
+            return redirect(route('qcm::mine'));
+        } else {
+            Session::push('messages', 'danger|Vous ne pouvez pas supprimer le QCM d\'un autre professeur');
+            Auth::logout();
+
+            return redirect(route('index'));
+        }
+
+    }
+
     public function getMine()
     {
         $qcms = Qcm::where('user_id', Auth::id())
@@ -97,17 +169,16 @@ class QcmController extends Controller
     {
         $qcm = Qcm::where('id', $id)->with('user', 'questions')->first();
 
-        if(Auth::id() == $qcm->user->id) {
-
+        if (Auth::id() == $qcm->user->id) {
 
             $ret = DB::transaction(function () use ($qcm) {
 
-                foreach($qcm->participations as $participation) {
+                foreach ($qcm->participations as $participation) {
                     $participation->delete();
                 }
 
                 foreach ($qcm->questions as $question) {
-                    foreach($question->answers as $answer) {
+                    foreach ($question->answers as $answer) {
                         $answer->delete();
                     }
 
@@ -119,10 +190,9 @@ class QcmController extends Controller
                 return true;
             });
 
-            if($ret) {
+            if ($ret) {
                 Session::push('messages', 'success|Le QCM a bien été supprimé');
-            }
-            else {
+            } else {
                 Session::push('messages', "danger|Le QCM n'a pas été supprimé");
             }
 
@@ -131,6 +201,7 @@ class QcmController extends Controller
         } else {
             Session::push('messages', 'danger|Vous ne pouvez pas supprimer le QCM d\'un autre professeur');
             Auth::logout();
+
             return redirect(route('index'));
         }
     }
