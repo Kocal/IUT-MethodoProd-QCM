@@ -9,8 +9,7 @@ $title = 'Mes QCM';
 @section('title', $title)
 
 @section('content')
-    <h2 class="header">{{ $title }}</h2>
-    <hr>
+    <h2 class="page-header text-center">{{ $title }}</h2>
 
     @if(count($qcms) === 0)
         <p class="alert alert-info">Vous n'avez créé aucun QCM pour l'instant.</p>

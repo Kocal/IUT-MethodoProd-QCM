@@ -13,8 +13,7 @@ $questions = 3; // 3 questions affichées par défaut
 @section('title', $title)
 
 @section('content')
-    <h2 class="header">{{ $title }}</h2>
-    <hr>
+    <h2 class="page-header text-center">{{ $title }}</h2>
 
     {!! BootForm::open()->id('qcm-creator') !!}
     <p class="alert alert-info">Les champs marqué d'un astérisque &laquo;<sub
