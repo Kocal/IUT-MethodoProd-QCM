@@ -6,7 +6,7 @@ $columnSizes = [
     'lg' => [3, 9]
 ];
 
-$requiredField = ' <sup style="color: #f00">*</sup>';
+$requiredField = '&nbsp;<sup style="color: #f00">*</sup>';
 ?>
 
 @extends('layouts.default')

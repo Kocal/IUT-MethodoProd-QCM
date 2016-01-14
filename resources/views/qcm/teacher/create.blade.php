@@ -10,7 +10,7 @@ $columnSizes = [
     'lg' => [3, 9]
 ];
 
-$requiredField = ' <sup style="color: #f00">*</sup>';
+$requiredField = '&nbsp;<sup style="color: #f00">*</sup>';
 
 $answers = 3; // 3 réponses par questions
 $questions = 3; // 3 questions affichées par défaut
