@@ -27,7 +27,7 @@ $questions = $qcm->questions->count();
             {!! BootForm::select('Matière associée' . $requiredField, 'subject_id')->options($subjectsList)->required()->select($qcm->subject_id) !!}
         </div>
     </div>
-    
+
     <div id="questions-container">
         {{-- On récupère le template "Mustache" des questions --}}
         <?php ob_start(); ?>
