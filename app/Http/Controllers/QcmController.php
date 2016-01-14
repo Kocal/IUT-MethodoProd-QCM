@@ -178,6 +178,7 @@ class QcmController extends Controller
                 }
 
                 foreach ($qcm->questions as $question) {
+
                     foreach ($question->answers as $answer) {
                         $answer->delete();
                     }
