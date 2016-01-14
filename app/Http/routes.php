@@ -37,7 +37,7 @@ Route::group(['as' => 'auth::', 'prefix' => 'auth'], function() {
 /**
  * Gestion pour le QCM
  */
-Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
+Route::group(['as' => 'qcm::', 'prefix' => 'qcm', 'middleware' => 'auth'], function() {
     // Affiche tous les QCM
     Route::get('/', ['as' => 'index', 'uses' => 'QcmController@index']);
 
