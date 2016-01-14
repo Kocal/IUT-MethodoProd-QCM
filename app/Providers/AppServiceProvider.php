@@ -14,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        setlocale(LC_ALL, 'fr_FR.UTF-8');
+
         // Indicateur visuel pour un champ obligatoire
         view()->share('requiredField', '&nbsp;<sup style="color: #f00">*</sup>');
 

@@ -1,6 +1,4 @@
 <?php
-setlocale(LC_ALL, 'fr_FR.UTF-8');
-
 $title = 'Mes QCM';
 ?>
 
@@ -19,8 +17,8 @@ $title = 'Mes QCM';
         <div class="qcm">
             <h3 class="qcm__title">{{ $qcm->name }}</h3>
             <p class="qcm__metas">
-                Créé le <time pudate="{{ $qcm->created_at }}">{{ $qcm->created_at->formatLocalized('%A %d %B %Y')}}</time>,
-                dans &laquo; {{ $qcm->subject->name }} &raquo;.
+                Créé le <time pudate="{{ $qcm->created_at }}">{{ $qcm->created_at() }}</time>,
+                dans &laquo;&nbsp;{{ $qcm->subject->name }}&nbsp;&raquo;.
             </p>
             <p>
                 {{ $qcm->description }}

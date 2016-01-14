@@ -5,7 +5,6 @@ $user = Auth::user();
 $title = trim($__env->yieldContent('title'));
 $title = 'QCM.fr' . (empty($title) ?: ' &raquo; ' . $title);
 ?>
-        
 <!DOCTYPE html>
 <html lang="fr">
     <head>

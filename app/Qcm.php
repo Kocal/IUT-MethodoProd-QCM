@@ -25,4 +25,8 @@ class Qcm extends Model
         return $this->hasManyThrough('\App\Participation', '\App\Question');
     }
 
+    public function created_at() {
+        return $this->created_at->formatLocalized('%A %d %B %Y');
+    }
+
 }
