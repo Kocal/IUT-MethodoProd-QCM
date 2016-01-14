@@ -19,9 +19,16 @@ $questions = 3; // 3 questions affichées par défaut
     <p class="alert alert-info">Les champs marqué d'un astérisque &laquo;<sub
                 style="font-size: 16px"><?= $requiredField ?></sub> &raquo; sont obligatoires.</p>
 
-    {!! BootForm::text('Nom du QCM' . $requiredField, 'name')->required() !!}
+    <div class="row">
+        <div class="col-md-6">
+            {!! BootForm::text('Nom du QCM' . $requiredField, 'name')->required() !!}
+        </div>
+        <div class="col-md-6">
+            {!! BootForm::select('Matière associée' . $requiredField, 'subject_id')->options($subjectsList)->required() !!}
+        </div>
+    </div>
+
     {!! BootForm::textarea('Description du QCM' . $requiredField, 'description')->rows(3)->required() !!}
-    {!! BootForm::select('Matière associée' . $requiredField, 'subject_id')->options($subjectsList)->required() !!}
 
     <div id="questions-container">
         {{-- On récupère le template "Mustache" des questions --}}
