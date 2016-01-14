@@ -1,18 +1,15 @@
 <?php
 require_once resource_path('views/functions.php');
+
 $user = Auth::user();
+$title = trim($__env->yieldContent('title'));
+$title = 'QCM.fr' . (empty($title) ?: ' &raquo; ' . $title);
 ?>
-
-@if (trim($__env->yieldContent('title')))
-    @section('title') | QCM.fr @append
-@else
-    @section('title', 'QCM.fr')
-@endif
-
+        
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <title>@yield('title')</title>
+        <title>{{ $title }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
         <link type="text/css" rel="stylesheet" href="{{ asset(elixir('css/all.css')) }}"  media="screen, projection"/>
@@ -28,10 +25,10 @@ $user = Auth::user();
                     </div>
                     <div id="navigation__container">
                         <ul id="navigation__menu">
+                            <li><a href="{{ route('qcm::index') }}">Voir les QCM</a></li>
                             @if(Auth::check())
                                 <?php switch($user['status']) {
-                                    case 'student': { ?>
-                                        <li><a href="#">Participer</a></li>
+                                case 'student': { ?>
                                         <li><a href="#">Résultats</a></li>
                                     <?php break; }
 
