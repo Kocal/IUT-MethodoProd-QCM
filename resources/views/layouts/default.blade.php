@@ -31,21 +31,24 @@ $user = Auth::user();
                             @if(Auth::check())
                                 <?php switch($user['status']) {
                                     case 'student': { ?>
-                                        <li><h4><a href="#">Participer</a></h4></li>
-                                        <li><h4><a href="#">Résultats</a></h4></li>
+                                        <li><a href="#">Participer</a></li>
+                                        <li><a href="#">Résultats</a></li>
                                     <?php break; }
 
                                     case 'teacher': { ?>
-                                        <li><h4><a href="{{ route('qcm::mine') }}">Voir mes QCM</a></h4></li>
-                                        <li><h4><a href="{{ route('qcm::create') }}">Créer un QCM</a></h4></li>
+                                        <li><a href="{{ route('qcm::mine') }}">Voir mes QCM</a></li>
+                                        <li><a href="{{ route('qcm::create') }}">Créer un QCM</a></li>
                                     <?php break; }
 
                                     default:
                                 } ?>
+                            @else
+                                <li><a href="{{ route('auth::login') }}">Se connecter</a></li>
+                                <li><a href="{{ route('auth::register') }}">S'inscrire</a></li>
                             @endif
                         </ul>
-                        <ul id="user__menu">
-                            @if(Auth::check())
+                        @if(Auth::check())
+                            <ul id="user__menu">
                                 <?php $status = trans('messages.' . $user['status']); ?>
                                 <li>
                                     <b>{{ $user['first_name'] }} {{ $user['last_name'] }}
@@ -53,11 +56,8 @@ $user = Auth::user();
                                     </b><br>
                                     <small><a href="{{ route('auth::logout') }}" class="">Se déconnecter</a></small>
                                 </li>
-                            @else
-                                <li><a href="{{ route('auth::login') }}">Se connecter</a></li>
-                                <li><a href="{{ route('auth::register') }}">S'inscrire</a></li>
-                            @endif
-                        </ul>
+                            </ul>
+                        @endif
                     </div>
                 </div>
             </nav>
