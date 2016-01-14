@@ -8868,6 +8868,15 @@ h4 {
   font-weight: 300;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 1em;
+}
+
 .container {
   max-width: 1024px;
   margin-left: auto;
