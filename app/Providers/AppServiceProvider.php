@@ -14,6 +14,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Indicateur visuel pour un champ obligatoire
+        view()->share('requiredField', '&nbsp;<sup style="color: #f00">*</sup>');
+
+        // Tailles des colonnes pour BootForm::openHorizontal()
+        view()->share('columnSizes', [
+            'sm' => [4, 8],
+            'lg' => [4, 8]
+        ]);
+
         Validator::extend('size_array', function($attribute, $value, array $parameters, $validator) {
             $datas = $validator->getData();
 

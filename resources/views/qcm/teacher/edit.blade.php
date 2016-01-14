@@ -1,19 +1,10 @@
 <?php
-$mustache = new Mustache_Engine(); // aaaaaa ué !!^^^
-
-BootForm::open(); // best hack mdr :-)))
-
 $title = "Modification d'un QCM";
 
-$columnSizes = [
-        'sm' => [4, 8],
-        'lg' => [3, 9]
-];
+$mustache = new Mustache_Engine();
+BootForm::open();
 
-$requiredField = '&nbsp;<sup style="color: #f00">*</sup>';
-
-$answers = 3; // 3 réponses par questions
-$questions = $qcm->questions->count(); // 3 questions affichées par défaut
+$questions = $qcm->questions->count();
 ?>
 
 @extends('layouts.default')

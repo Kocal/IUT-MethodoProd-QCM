@@ -1,16 +1,8 @@
 <?php
-$mustache = new Mustache_Engine(); // aaaaaa ué !!^^^
-
-BootForm::open(); // best hack mdr :-)))
-
 $title = "Création d'un nouveau QCM";
 
-$columnSizes = [
-    'sm' => [4, 8],
-    'lg' => [3, 9]
-];
-
-$requiredField = '&nbsp;<sup style="color: #f00">*</sup>';
+$mustache = new Mustache_Engine();
+BootForm::open();
 
 $answers = 3; // 3 réponses par questions
 $questions = 3; // 3 questions affichées par défaut
@@ -84,8 +76,8 @@ $questions = 3; // 3 questions affichées par défaut
 
         (function ($) {
             qcm = new QCM({
-                answersNumberPerQuestion: {{ $answers }},
-                questionsNumber: {{ $questions }}
+                answersNumberPerQuestion: 3,
+                questionsNumber: 3
             }, {
                 form: '#qcm-creator',
                 container: '#questions-container',

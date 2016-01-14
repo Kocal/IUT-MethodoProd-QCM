@@ -1,12 +1,5 @@
 <?php
-    $title = 'Connexion';
-
-    $columnSizes = [
-        'sm' => [4, 8],
-        'lg' => [3, 9]
-    ];
-
-    $requiredField = '&nbsp;<sup style="color: #f00">*</sup>';
+$title = 'Connexion';
 ?>
 
 @extends('layouts.default')
@@ -17,22 +10,34 @@
     <h2 class="header">{{ $title }}</h2>
     <hr>
 
-    {!! BootForm::openHorizontal($columnSizes)
+    <div class="row">
+        <div class="col-md-6">
+            {!! BootForm::openHorizontal($columnSizes)
         ->action(route('auth::login')) !!}
 
-        <p class="alert alert-info">Les champs marqué d'un astérisque &laquo;<sub style="font-size: 16px"><?= $requiredField ?></sub> &raquo; sont obligatoires.</p>
+            <p class="alert alert-info">Les champs marqué d'un astérisque &laquo;<sub
+                        style="font-size: 16px"><?= $requiredField ?></sub> &raquo; sont obligatoires.</p>
 
-        <br>
+            <br>
 
-        {!! BootForm::text('Adresse e-mail' . $requiredField, 'email')
-            ->required()
-            ->placeholder('adresse@exemple.com') !!}
+            {!! BootForm::text('Adresse e-mail' . $requiredField, 'email')
+                ->required()
+                ->placeholder('adresse@exemple.fr') !!}
 
-        {!! BootForm::password('Mot de passe' . $requiredField, 'password')
-            ->required() !!}
+            {!! BootForm::password('Mot de passe' . $requiredField, 'password')
+                ->required() !!}
 
-        {!! BootForm::submit('Se connecter')
-            ->class('btn btn-primary') !!}
+            {!! BootForm::submit('Se connecter')
+                ->class('btn btn-primary') !!}
 
-    {!! BootForm::close() !!}
+            {!! BootForm::close() !!}
+        </div>
+        <div class="col-md-6 text-center">
+            <h3>Pas encore de compte sur QCM.fr ?</h3>
+            <p>Inscrivez-vous, c'est simple et rapide !</p>
+            <p>
+                <a href="{{ route('auth::register') }}" class="btn btn-primary">S'inscrire</a>
+            </p>
+        </div>
+    </div>
 @endsection

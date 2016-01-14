@@ -1,6 +1,5 @@
 <?php
-require_once app_path('functions.php');
-
+require_once resource_path('views/functions.php');
 $user = Auth::user();
 ?>
 
