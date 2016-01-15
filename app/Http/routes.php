@@ -37,10 +37,23 @@ Route::group(['as' => 'auth::', 'prefix' => 'auth'], function() {
 /**
  * Gestion pour le QCM
  */
-Route::group(['as' => 'qcm::', 'prefix' => 'qcm', 'middleware' => 'auth'], function() {
+Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
     // Affiche tous les QCM
     Route::get('/', ['as' => 'index', 'uses' => 'QcmController@index']);
 
+    // Routes réservées aux utilisateurs connectés
+    Route::group(['middleware' => 'auth'], function() {
+        // Affiche le QCM #id
+        Route::get('/play/{id}', ['as' => 'play', 'uses' => 'QcmController@getPlay'])
+            ->where('id', '[0-9]+');
+
+        // Enregistre la participation au QCM #id
+        Route::post('/play/{id}', ['as' => 'play', 'uses' => 'QcmController@postPlay'])
+            ->where('id', '[0-9]+');
+
+    });
+
+    // Routes réservées aux professeurs
     Route::group(['middleware' => 'teacher'], function() {
         // Affiche le formulaire de création de QCM
         Route::get('create', ['as' => 'create', 'uses' => 'QcmController@getCreate']);
