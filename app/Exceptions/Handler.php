@@ -4,9 +4,11 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Redirect;
+use Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -44,6 +46,27 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
+        }
+
+        if($e instanceof NotFoundHttpException) {
+            $message = $e->getMessage();
+
+            if(!empty($message)) {
+                $error = '';
+
+                switch($message) {
+                    case 'No query results for model [App\Qcm].':
+                        $error = "Ce QCM n'existe pas";
+                        break;
+
+                    default:
+                        $error = $message;
+                }
+
+                Session::push('messages', 'danger|' . $error);
+            }
+
+            return Redirect::route('index');
         }
 
         return parent::render($request, $e);
