@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(SubjectsSeeder::class);
+        $this->call(QcmSeeder::class);
 
         Model::reguard();
     }
