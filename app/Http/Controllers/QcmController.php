@@ -29,12 +29,22 @@ class QcmController extends Controller
     {
         $qcm = Qcm::with('user', 'subject')->findOrFail($id);
 
+        if(Auth::user()->played($qcm)) {
+            Session::push('messages', 'danger|Vous ne pouvez pas participer deux fois à ce QCM');
+            return Redirect::route('qcm::index');
+        }
+
         return view('qcm.play', compact('qcm'));
     }
 
     public function postPlay(Request $request, $id)
     {
         $qcm = Qcm::findOrFail($id);
+
+        if(Auth::user()->played($qcm)) {
+            Session::push('messages', 'danger|Vous ne pouvez pas participer deux fois à ce QCM');
+            return Redirect::route('qcm::index');
+        }
 
         $ret = DB::transaction(function () use ($request, $qcm) {
 

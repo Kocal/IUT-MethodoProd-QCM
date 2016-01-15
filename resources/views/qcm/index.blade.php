@@ -23,8 +23,12 @@ $title = "Liste des QCM";
                 </p>
                 <p>{{ $qcm->description }}</p>
                 <p>
-                    <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Voir</a>
+                    @if(Auth::user()->played($qcm))
+                        <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary" disabled>Vous avez déjà participé</a>
+                    @else
+                        <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Voir</a>
+                    @endif
                 </p>
             </div>
             <hr>
