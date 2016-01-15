@@ -17,6 +17,20 @@ class QcmController extends Controller
 
     public function index()
     {
+        $qcms = Qcm::with('user', 'subject')->orderBy('created_at', 'desc')->paginate(30);
+
+        return view('qcm.index', compact('qcms'));
+    }
+
+    public function getPlay(Request $request, $id) {
+        $qcm = Qcm::with('user', 'subject')->findOrFail($id);
+
+        return view('qcm.view', compact('qcm'));
+    }
+
+    public function postPlay(Request $request, $id) {
+        $qcm = Qcm::findOrFail($id);
+
     }
 
     public function getCreate()
@@ -111,7 +125,6 @@ class QcmController extends Controller
             ]);
 
             $ret = DB::transaction(function () use ($request, $qcm) {
-
                 $datas = $request->all();
                 $questions = $qcm->questions;
 
@@ -121,16 +134,13 @@ class QcmController extends Controller
                 $qcm->update();
 
                 foreach ($questions as $q => $question) {
-
                     $question->question = $datas['questions'][ $q ];
                     $question->update();
 
                     foreach ($question->answers as $a => $answer) {
-
                         $answer->answer = $datas['answers'][ $q ][ $a ];
                         $answer->isValid = ($datas['valids_answers'][ $q ] == $a);
                         $answer->update();
-
                     }
                 }
 
@@ -145,12 +155,11 @@ class QcmController extends Controller
 
             return redirect(route('qcm::mine'));
         } else {
-            Session::push('messages', 'danger|Vous ne pouvez pas supprimer le QCM d\'un autre professeur');
+            Session::push('messages', 'danger|Vous ne pouvez pas modifier le QCM d\'un autre professeur');
             Auth::logout();
 
             return redirect(route('index'));
         }
-
     }
 
     public function getMine()
@@ -162,7 +171,7 @@ class QcmController extends Controller
 
         $qcms->setPath(route('qcm::mine'));
 
-        return view('qcm.teacher.mine')->with(compact('qcms'));
+        return view('qcm.teacher.mine', compact('qcms'));
     }
 
     public function delete(Request $request, $id)

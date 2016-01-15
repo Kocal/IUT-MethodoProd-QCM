@@ -9019,7 +9019,7 @@ textarea {
 }
 
 .table-qcm .table-qcm__valid {
-  width: 90px;
+  width: 100px;
 }
 
 .table-qcm .table-qcm__valid .radio {
@@ -9029,6 +9029,10 @@ textarea {
 
 .table-qcm .table-qcm__answer .form-group {
   margin-bottom: 0;
+}
+
+.table-qcm.table-qcm-view td {
+  vertical-align: middle !important;
 }
 
 .btn-remove-question {

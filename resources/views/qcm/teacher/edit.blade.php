@@ -14,7 +14,7 @@ $questions = $qcm->questions->count();
 @section('content')
     <h2 class="page-header text-center">{{ $title }}</h2>
 
-    {!! BootForm::open()!!}
+    {!! BootForm::open() !!}
 
     <p class="alert alert-info">Les champs marqué d'un astérisque &laquo;<sub
                 style="font-size: 16px"><?= $requiredField ?></sub> &raquo; sont obligatoires.</p>
@@ -27,6 +27,8 @@ $questions = $qcm->questions->count();
             {!! BootForm::select('Matière associée' . $requiredField, 'subject_id')->options($subjectsList)->required()->select($qcm->subject_id) !!}
         </div>
     </div>
+
+    {!! BootForm::textarea('Description du QCM' . $requiredField, 'description')->required()->rows(3)->value($qcm->description) !!}
 
     <div id="questions-container">
         {{-- On récupère le template "Mustache" des questions --}}

@@ -17,7 +17,7 @@ textarea {
   @extend .table, .table-hover, .table-condensed;
 
   .table-qcm__valid {
-    width: 90px;
+    width: 100px;
 
     .radio {
       @extend .text-center;
@@ -27,9 +27,14 @@ textarea {
   }
 
   .table-qcm__answer {
-
     .form-group {
       margin-bottom: 0;
+    }
+  }
+
+  &.table-qcm-view {
+    td {
+      vertical-align: middle !important;
     }
   }
 }
