@@ -23,7 +23,8 @@ $title = "Liste des QCM";
                 </p>
                 <p>{{ $qcm->description }}</p>
                 <p>
-                    <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary">Participer</a>
+                    <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Voir</a>
                 </p>
             </div>
             <hr>

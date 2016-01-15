@@ -19,20 +19,11 @@ $questions = $qcm->questions->count();
     <p class="alert alert-info">Les champs marqué d'un astérisque &laquo;<sub
                 style="font-size: 16px"><?= $requiredField ?></sub> &raquo; sont obligatoires.</p>
 
-    <div class="row">
-        <div class="col-md-4">
-            <b>Matière associée&nbsp;:</b>&nbsp;{{ $qcm->subject->name }}
-        </div>
-        <div class="col-md-4">
-            <b>Professeur&nbsp;:</b>&nbsp;{{ $qcm->user->names() }}
-        </div>
-        <div class="col-md-4">
-            <b>Créé le&nbsp;:</b>&nbsp;{{ $qcm->created_at() }}
-        </div>
-    </div>
-
-    <div class="row">
-    </div>
+    <p>
+        <b>Matière associée&nbsp;:</b>&nbsp;{{ $qcm->subject->name }}<br>
+        <b>Créé le&nbsp;:</b>&nbsp;{{ $qcm->created_at() }}<br>
+        <b>Professeur&nbsp;:</b>&nbsp;{{ $qcm->user->names() }}
+    </p>
 
     <div id="questions-container">
         <br>

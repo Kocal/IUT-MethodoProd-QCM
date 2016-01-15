@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Answer;
 use App\Http\Requests;
+use App\Participation;
 use App\Qcm;
 use App\Question;
 use App\Subject;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+use Redirect;
 use Session;
+use URL;
 
 class QcmController extends Controller
 {
@@ -22,15 +25,58 @@ class QcmController extends Controller
         return view('qcm.index', compact('qcms'));
     }
 
-    public function getPlay(Request $request, $id) {
+    public function getPlay(Request $request, $id)
+    {
         $qcm = Qcm::with('user', 'subject')->findOrFail($id);
 
         return view('qcm.play', compact('qcm'));
     }
 
-    public function postPlay(Request $request, $id) {
+    public function postPlay(Request $request, $id)
+    {
         $qcm = Qcm::findOrFail($id);
 
+        $ret = DB::transaction(function () use ($request, $qcm) {
+
+            $datas = $request->all();
+
+            $questions = $qcm->questions;
+            $questionsCount = $questions->count();
+            $validsAnswersCount = count($datas['valids_answers']);
+
+            if ($questionsCount != $validsAnswersCount) {
+                Session::push('messages', 'danger|Le nombre de questions est différent du nombre de vos réponses');
+
+                return Redirect::to(URL::previous());
+            }
+
+            foreach ($questions as $k => $question) {
+                $validAnswer = $datas['valids_answers'][ $k ];
+                $answer = $question->answers->get($validAnswer);
+
+                if ($answer == null) {
+                    Session::push('messages', 'danger|???');
+
+                    return Redirect::to(URL::previous());
+                }
+
+                Participation::create([
+                    'user_id' => Auth::id(),
+                    'question_id' => $question->id,
+                    'answer_id' => $answer->id
+                ]);
+            }
+
+            return true;
+        });
+
+        if($ret) {
+            Session::push('messages', 'success|Votre participation a bien été prise en compte');
+            return Redirect::route('qcm::index');
+        } else {
+            Session::push('messages', 'danger|Il y a eu un soucis lors de votre participation');
+            return Redirect::to(URL::previous());
+        }
     }
 
     public function getCreate()
