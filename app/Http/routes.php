@@ -51,6 +51,7 @@ Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
         Route::post('/play/{id}', ['as' => 'play', 'uses' => 'QcmController@postPlay'])
             ->where('id', '[0-9]+');
 
+        Route::get('/results', ['as' => 'results', 'uses' => 'QcmController@getResultsOfStudent']);
     });
 
     // Routes réservées aux professeurs

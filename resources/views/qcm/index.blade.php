@@ -23,7 +23,7 @@ $title = "Liste des QCM";
                 </p>
                 <p>{{ $qcm->description }}</p>
                 <p>
-                    @if(Auth::user()->played($qcm))
+                    @if(Auth::user()->hasPlayed($qcm))
                         <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary" disabled>Vous avez déjà participé</a>
                     @else
                         <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary">

@@ -28,7 +28,7 @@ $title = 'QCM.fr' . (empty($title) ?: ' &raquo; ' . $title);
                             @if(Auth::check())
                                 <?php switch($user['status']) {
                                 case 'student': { ?>
-                                        <li><a href="#">Résultats</a></li>
+                                        <li><a href="{{ route('qcm::results') }}">Résultats</a></li>
                                     <?php break; }
 
                                     case 'teacher': { ?>

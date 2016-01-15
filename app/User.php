@@ -8,6 +8,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 
@@ -43,10 +44,24 @@ class User extends Model implements AuthenticatableContract,
         return $this->first_name . ' ' . $this->last_name;
     }
 
-    public function played(Qcm $qcm)
+    public function participations() {
+        return $this->hasMany('\App\Participation');
+    }
+
+    public function hasPlayed(Qcm $qcm)
     {
-        $participations = $qcm->participations->where('user_id', Auth::id());
+        $participations = $this->participations();
 
         return $participations->count() != 0;
+    }
+
+    public function getPlayedQcms() {
+        $qcms = [];
+
+        foreach($this->hasMany('\App\Participation')->groupBy('qcm_id')->get() as $participation) {
+            $qcms[] = $participation->qcm;
+        }
+
+        return $qcms;
     }
 }

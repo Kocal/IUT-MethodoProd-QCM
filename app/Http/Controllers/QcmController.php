@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Redirect;
 use Session;
 use URL;
+use App\User;
 
 class QcmController extends Controller
 {
@@ -29,8 +30,9 @@ class QcmController extends Controller
     {
         $qcm = Qcm::with('user', 'subject')->findOrFail($id);
 
-        if(Auth::user()->played($qcm)) {
+        if (Auth::user()->hasPlayed($qcm)) {
             Session::push('messages', 'danger|Vous ne pouvez pas participer deux fois à ce QCM');
+
             return Redirect::route('qcm::index');
         }
 
@@ -41,8 +43,9 @@ class QcmController extends Controller
     {
         $qcm = Qcm::findOrFail($id);
 
-        if(Auth::user()->played($qcm)) {
+        if (Auth::user()->hasPlayed($qcm)) {
             Session::push('messages', 'danger|Vous ne pouvez pas participer deux fois à ce QCM');
+
             return Redirect::route('qcm::index');
         }
 
@@ -71,22 +74,67 @@ class QcmController extends Controller
                 }
 
                 Participation::create([
-                    'user_id' => Auth::id(),
+                    'user_id'     => Auth::id(),
+                    'qcm_id'      => $qcm->id,
                     'question_id' => $question->id,
-                    'answer_id' => $answer->id
+                    'answer_id'   => $answer->id,
                 ]);
             }
 
             return true;
         });
 
-        if($ret) {
+        if ($ret) {
             Session::push('messages', 'success|Votre participation a bien été prise en compte');
+
             return Redirect::route('qcm::index');
         } else {
             Session::push('messages', 'danger|Il y a eu un soucis lors de votre participation');
+
             return Redirect::to(URL::previous());
         }
+    }
+
+    public function getResultsOfStudent(Request $request)
+    {
+        $results = [];
+        $user = User::where('id', Auth::id())->with('participations')->first();
+
+        $lastid = 0;
+
+        foreach($user->participations as $participation) {
+
+            $qcm = $participation->qcm;
+
+            if($lastid == $qcm->id) {
+                continue;
+            }
+
+            $lastid = $qcm->id;
+
+            $results[$lastid] = new class($qcm) {
+
+                public $qcm;
+
+                public function __construct($qcm) {
+                    $this->qcm = $qcm;
+                }
+
+                public function getPoints() {
+                    $points = 0;
+                    $participations = Participation::where('user_id', Auth::id())->where('qcm_id', $this->qcm->id);
+
+                    foreach($participations->get() as $participation) {
+                        $answer = Answer::where('id', $participation->answer_id)->first();
+                        $points += $answer->isValid;
+                    }
+
+                    return $points;
+                }
+            };
+        }
+
+        return view('qcm.results', compact('results'));
     }
 
     public function getCreate()
