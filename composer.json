@@ -17,7 +17,7 @@
         "adamwathan/bootforms": "^0.7.0",
         "caouecs/laravel4-lang": "~2.0",
         "barryvdh/laravel-ide-helper": "^2.1",
-        "barryvdh/laravel-debugbar": "^2.0",
+        "barryvdh/laravel-debugbar": "^2.1",
         "mustache/mustache": "^2.9"
     },
     "require-dev": {
