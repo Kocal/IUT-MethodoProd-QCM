@@ -25,7 +25,7 @@ class QcmController extends Controller
     public function getPlay(Request $request, $id) {
         $qcm = Qcm::with('user', 'subject')->findOrFail($id);
 
-        return view('qcm.view', compact('qcm'));
+        return view('qcm.play', compact('qcm'));
     }
 
     public function postPlay(Request $request, $id) {
