@@ -24,8 +24,9 @@ $user  = Auth::user();
                     Créé le
                     <time pudate="{{ $qcm->created_at }}">{{ ucfirst($qcm->created_at()) }}</time>
                     ,
-                    dans &laquo;&nbsp;<span
-                            title="{{ $qcm->subject->name }}">{{ Str::words($qcm->subject->name, 3) }}</span>&nbsp;&raquo;,
+                    {{ !!$qcm->subject }}
+                    dans &laquo;&nbsp;<span title="{{ $qcm->subject->name }}">
+                        {{ Str::words($qcm->subject->name, 3) }}</span>&nbsp;&raquo;,
                     par {{ $qcm->user->names() }}
                 </p>
                 <p>{{ Str::words($qcm->description, 30, '...') }}</p>
