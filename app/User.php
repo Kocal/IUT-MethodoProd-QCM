@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 
-class User extends Model implements AuthenticatableContract,
-    AuthorizableContract,
-    CanResetPasswordContract
+class User extends Model
+    implements AuthenticatableContract, AuthorizableContract,
+               CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
@@ -30,7 +30,14 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'last_name', 'status', 'email', 'password'];
+    protected $fillable
+        = [
+            'first_name',
+            'last_name',
+            'status',
+            'email',
+            'password',
+        ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -41,10 +48,11 @@ class User extends Model implements AuthenticatableContract,
 
     public function names()
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name.' '.$this->last_name;
     }
 
-    public function participations() {
+    public function participations()
+    {
         return $this->hasMany('\App\Participation');
     }
 
@@ -55,13 +63,22 @@ class User extends Model implements AuthenticatableContract,
         return $participations->count() != 0;
     }
 
-    public function getPlayedQcms() {
+    public function getPlayedQcms()
+    {
         $qcms = [];
 
-        foreach($this->hasMany('\App\Participation')->groupBy('qcm_id')->get() as $participation) {
+        foreach (
+            $this->hasMany('\App\Participation')->groupBy('qcm_id')->get() as
+            $participation
+        ) {
             $qcms[] = $participation->qcm;
         }
 
         return $qcms;
+    }
+
+    public function isCreator(Qcm $qcm)
+    {
+        return $this->id === $qcm->user_id;
     }
 }

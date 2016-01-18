@@ -23,11 +23,15 @@ $title = "Liste des QCM";
                 </p>
                 <p>{{ Str::words($qcm->description, 30, '...') }}</p>
                 <p>
-                    @if(Auth::check() && Auth::user()->hasPlayed($qcm))
-                        <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary" disabled>Vous avez déjà participé</a>
+                    @if(Auth::check() && Auth::user()->isCreator($qcm))
+                        <a href="{{ route('qcm::edit', ['id' => $qcm->id]) }}" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;Voir dans l'interface d'édition</a>
+                    @elseif(Auth::check() && Auth::user()->hasPlayed($qcm))
+                        <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary" disabled>
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;Vous avez déjà participé</a>
                     @else
                         <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Voir</a>
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;Voir</a>
                     @endif
                 </p>
             </div>

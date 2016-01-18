@@ -43,6 +43,5 @@ class QcmSeeder extends Seeder
                 }
             }
         }
-
     }
 }
