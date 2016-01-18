@@ -98,11 +98,15 @@ class QcmController extends Controller
     public function getResultsOfStudent(Request $request)
     {
         $results = [];
-        $user = User::where('id', Auth::id())->with('participations')->first();
+        $user = User::where('id', Auth::id())->with('participations',
+            'participations.qcm', 'participations.qcm.subject',
+            'participations.qcm.questions', 'participations.answers'
+        )->first();
 
+        $participations = $user->participations;
         $lastid = 0;
 
-        foreach($user->participations as $participation) {
+        foreach($participations as $participation) {
 
             $qcm = $participation->qcm;
 
@@ -112,20 +116,27 @@ class QcmController extends Controller
 
             $lastid = $qcm->id;
 
-            $results[$lastid] = new class($qcm) {
+            $results[$lastid] = new class($participations, $qcm) {
 
+                public $participations;
                 public $qcm;
 
-                public function __construct($qcm) {
+                public function __construct($participations, $qcm) {
+                    $this->participations = $participations;
                     $this->qcm = $qcm;
                 }
 
                 public function getPoints() {
                     $points = 0;
-                    $participations = Participation::where('user_id', Auth::id())->where('qcm_id', $this->qcm->id);
+                    $participations = $this->participations->where('qcm_id', $this->qcm->id)->all();
 
-                    foreach($participations->get() as $participation) {
-                        $answer = Answer::where('id', $participation->answer_id)->first();
+                    foreach($participations as $participation) {
+                        $answer = $participation->answers->first();
+
+                        if(!$answer) {
+                            continue;
+                        }
+
                         $points += $answer->isValid;
                     }
 

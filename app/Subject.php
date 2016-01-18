@@ -24,5 +24,4 @@ class Subject extends Model {
 
         return $list;
     }
-
 }
