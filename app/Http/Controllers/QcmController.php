@@ -21,7 +21,7 @@ class QcmController extends Controller
 
     public function index()
     {
-        $qcms = Qcm::with('user', 'subject')->orderBy('created_at', 'desc')->paginate(30);
+        $qcms = Qcm::with('user', 'subject')->orderBy('created_at', 'desc')->paginate(20);
 
         return view('qcm.index', compact('qcms'));
     }

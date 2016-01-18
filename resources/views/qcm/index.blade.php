@@ -21,9 +21,9 @@ $title = "Liste des QCM";
                     dans &laquo;&nbsp;<span title="{{ $qcm->subject->name }}">{{ Str::words($qcm->subject->name, 3) }}</span>&nbsp;&raquo;,
                     par {{ $qcm->user->names() }}
                 </p>
-                <p>{{ $qcm->description }}</p>
+                <p>{{ Str::words($qcm->description, 30, '...') }}</p>
                 <p>
-                    @if(Auth::user()->hasPlayed($qcm))
+                    @if(Auth::check() && Auth::user()->hasPlayed($qcm))
                         <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary" disabled>Vous avez déjà participé</a>
                     @else
                         <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary">
@@ -34,4 +34,8 @@ $title = "Liste des QCM";
             <hr>
         @endforeach
     @endif
+
+    <div class="text-center">
+        {!! $qcms->render()  !!}
+    </div>
 @endsection
