@@ -59,18 +59,18 @@ class User extends Model
     public function hasPlayed(Qcm $qcm)
     {
         $participations = $this->participations();
-        
+
         return $participations->where('qcm_id', $qcm->id)->count() > 0;
     }
 
     public function getPlayedQcms()
     {
         $qcms = [];
+        $participations = $this->hasMany('\App\Participation')->groupBy(
+            'qcm_id'
+        );
 
-        foreach (
-            $this->hasMany('\App\Participation')->groupBy('qcm_id')->get() as
-            $participation
-        ) {
+        foreach ($participations() as $participation) {
             $qcms[] = $participation->qcm;
         }
 
