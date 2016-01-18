@@ -17,28 +17,29 @@ class QcmSeeder extends Seeder
     public function run()
     {
         $faker = Factory::create('fr_FR');
+        $subjectsCount = Subject::all()->count();
 
-        for($qcms = 0; $qcms < 20; $qcms++) {
+        for($qcms = 0; $qcms < 100; $qcms++) {
             $qcm = Qcm::create([
                 'user_id'     => 1,
-                'subject_id'  => rand(0, 27),
+                'subject_id'  => rand(1, $subjectsCount - 1),
                 'name'        => $faker->sentence(6),
                 'description' => $faker->sentence(40)
             ]);
 
-            for($questions = 0; $questions < rand(3, 7); $questions++) {
+            for($questions = 0; $questions < rand(5, 10); $questions++) {
 
                 $question = Question::create([
                     'qcm_id' => $qcm->id,
                     'question' => $faker->sentence(20)
                 ]);
 
-                for($answers = 0; $answers < rand(2, 5); $answers++) {
+                for($answers = 0; $answers < rand(2, 4); $answers++) {
 
                     Answer::create([
                         'question_id' => $question->id,
                         'answer'      => $faker->sentence(10),
-                        'isValid'     => ($answers == 0)
+                        'isValid'     => $answers == 0,
                     ]);
                 }
             }

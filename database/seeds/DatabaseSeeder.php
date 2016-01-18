@@ -14,8 +14,10 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call(UserSeeder::class);
         $this->call(SubjectsSeeder::class);
         $this->call(QcmSeeder::class);
+        $this->call(ParticipationSeeder::class);
 
         Model::reguard();
     }
