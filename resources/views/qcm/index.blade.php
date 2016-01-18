@@ -1,9 +1,13 @@
 <?php
 use Illuminate\Support\Str;
+
 $title = "Liste des QCM";
+$check = Auth::check();
+$user  = Auth::user();
 ?>
 
 @extends('layouts.default')
+
 @section('title', $title)
 
 @section('content')
@@ -17,18 +21,23 @@ $title = "Liste des QCM";
             <div class="qcm">
                 <h3 class="qcm__title">{{ $qcm->name }}</h3>
                 <p class="qcm__metas">
-                    Créé le <time pudate="{{ $qcm->created_at }}">{{ ucfirst($qcm->created_at()) }}</time>,
-                    dans &laquo;&nbsp;<span title="{{ $qcm->subject->name }}">{{ Str::words($qcm->subject->name, 3) }}</span>&nbsp;&raquo;,
+                    Créé le
+                    <time pudate="{{ $qcm->created_at }}">{{ ucfirst($qcm->created_at()) }}</time>
+                    ,
+                    dans &laquo;&nbsp;<span
+                            title="{{ $qcm->subject->name }}">{{ Str::words($qcm->subject->name, 3) }}</span>&nbsp;&raquo;,
                     par {{ $qcm->user->names() }}
                 </p>
                 <p>{{ Str::words($qcm->description, 30, '...') }}</p>
                 <p>
-                    @if(Auth::check() && Auth::user()->isCreator($qcm))
+                    @if($check && $user->isCreator($qcm))
                         <a href="{{ route('qcm::edit', ['id' => $qcm->id]) }}" class="btn btn-primary">
-                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;Voir dans l'interface d'édition</a>
-                    @elseif(Auth::check() && Auth::user()->hasPlayed($qcm))
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;Voir dans
+                            l'interface d'édition</a>
+                    @elseif($check && $user->hasPlayed($qcm))
                         <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary" disabled>
-                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;Vous avez déjà participé</a>
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;Vous avez déjà
+                            participé</a>
                     @else
                         <a href="{{ route('qcm::play', ['id' => $qcm->id]) }}" class="btn btn-primary">
                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>&nbsp;Voir</a>
