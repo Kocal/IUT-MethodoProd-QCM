@@ -59,8 +59,8 @@ class User extends Model
     public function hasPlayed(Qcm $qcm)
     {
         $participations = $this->participations();
-
-        return $participations->count() != 0;
+        
+        return $participations->where('qcm_id', $qcm->id)->count() > 0;
     }
 
     public function getPlayedQcms()
