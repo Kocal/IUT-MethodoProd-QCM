@@ -42,7 +42,7 @@ Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
     Route::get('/', ['as' => 'index', 'uses' => 'QcmController@index']);
 
     // Routes réservées aux utilisateurs connectés
-    Route::group(['middleware' => 'auth'], function() {
+    Route::group(['middleware' => 'student'], function() {
         // Affiche le QCM #id
         Route::get('/play/{id}', ['as' => 'play', 'uses' => 'QcmController@getPlay'])
             ->where('id', '[0-9]+');
