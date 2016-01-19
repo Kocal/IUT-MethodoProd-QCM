@@ -32,11 +32,7 @@ class User extends Model
      */
     protected $fillable
         = [
-            'first_name',
-            'last_name',
-            'status',
-            'email',
-            'password',
+            'first_name', 'last_name', 'status', 'email', 'password',
         ];
 
     /**
@@ -48,7 +44,7 @@ class User extends Model
 
     public function names()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function participations()
@@ -65,7 +61,7 @@ class User extends Model
 
     public function getPlayedQcms()
     {
-        $qcms = [];
+        $qcms           = [];
         $participations = $this->hasMany('\App\Participation')->groupBy(
             'qcm_id'
         );
@@ -80,5 +76,10 @@ class User extends Model
     public function isCreator(Qcm $qcm)
     {
         return $this->id === $qcm->user_id;
+    }
+
+    public function qcms()
+    {
+        return $this->hasMany('\App\Qcm');
     }
 }
