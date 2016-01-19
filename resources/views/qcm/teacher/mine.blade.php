@@ -25,7 +25,7 @@ $title = 'Mes QCM';
             </p>
             <div class="row">
                 <div class="col-sm-4 text-right">
-                    <a href="#" class="btn btn-default">
+                    <a href="{{ route('qcm::notes', ['id' => $qcm->id]) }}" class="btn btn-default">
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                         Consulter les notes
                     </a>

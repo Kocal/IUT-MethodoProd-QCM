@@ -13,7 +13,7 @@ $title = "Vos résultats";
     @if(count($results) == 0)
         <div class="alert alert-info">Vous n'avez participé à aucun QCM pour l'instant</div>
     @else
-        <table class="table table-qcm sortable" data-order='[[ 0, "desc" ]]' data-page-length='25'>
+        <table class="table table-qcm sortable" data-order='[[ 4, "desc" ]]' data-page-length='25'>
             <thead>
             <tr>
                 <th>#</th>
@@ -47,6 +47,7 @@ $title = "Vos résultats";
 @section('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/bs/dt-1.10.10,r-2.0.0/datatables.min.css"/>
 @endsection
+
 @section('js')
     <script type="text/javascript" src="https://cdn.datatables.net/s/bs/dt-1.10.10,r-2.0.0/datatables.min.js"></script>
     <script>
