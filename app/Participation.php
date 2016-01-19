@@ -22,4 +22,8 @@ class Participation extends Model
     public function answers() {
         return $this->hasMany('\App\Answer', 'id');
     }
+
+    public function answer() {
+        return $this->hasOne('\App\Answer', 'id', 'answer_id');
+    }
 }
