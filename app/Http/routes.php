@@ -56,6 +56,14 @@ Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
 
     // Routes réservées aux professeurs
     Route::group(['middleware' => 'teacher'], function() {
+
+        // Affiche les QCM créés par le professeur
+        Route::get('mine', ['as' => 'mine', 'uses' => 'QcmController@getMine']);
+
+        // Affiche les notes des étudiants sur un QCM
+        Route::get('notes/{id}', ['as' => 'notes', 'uses' => 'QcmController@getNotes'])
+            ->where('id', '[0-9]+');
+
         // Affiche le formulaire de création de QCM
         Route::get('create', ['as' => 'create', 'uses' => 'QcmController@getCreate']);
 
@@ -69,9 +77,6 @@ Route::group(['as' => 'qcm::', 'prefix' => 'qcm'], function() {
         // Traitement pour l'édition du QCM
         Route::post('edit/{id}', ['as' => 'edit', 'uses' => 'QcmController@postEdit'])
             ->where('id', '[0-9]+');
-
-        // Affiche les QCM créés par le professeur
-        Route::get('mine', ['as' => 'mine', 'uses'=> 'QcmController@getMine']);
 
         Route::get('delete/{id}', ['as' => 'delete', 'uses' => 'QcmController@delete'])
             ->where('id', '[0-9]+');

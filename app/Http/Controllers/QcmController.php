@@ -122,7 +122,7 @@ class QcmController extends Controller
             'participations.qcm',
             'participations.qcm.subject',
             'participations.qcm.questions',
-            'participations.answers'
+            'participations.answer'
         )->first();
 
         $participations = $user->participations;
@@ -153,22 +153,13 @@ class QcmController extends Controller
                 public function getPoints()
                 {
                     $points         = 0;
-                    $participations = $this->participations->where('qcm_id', $this->qcm->id);
+                    $participations = $this->participations->where(
+                        'qcm_id',
+                        $this->qcm->id
+                    );
 
                     foreach ($participations as $participation) {
                         $answer = $participation->answer;
-
-                        /*
-                        var_dump([
-                            'answer.id' => $answer->id,
-                            'answer.isValid' => $answer->isValid,
-                            'participation.qcm_id' => $participation->qcm_id,
-                            'participation.user_id' => $participation->user_id,
-                            'participation.answer_id' => $participation->answer_id,
-                            'participation.question_id' => $participation->question_id,
-                        ]);
-                        */
-
                         $points += $answer->isValid;
                     }
 
@@ -182,30 +173,33 @@ class QcmController extends Controller
 
     public function getNotes(Request $request, $id)
     {
-        $qcm            = Qcm::with('subject')->findOrFail($id);
-        $questions      = $qcm->questions;
+        $qcm = Qcm::with(
+            'subject',
+            'participations',
+            'participations.answer',
+            'participations.user'
+        )->findOrFail($id);
+
         $participations = $qcm->participations;
         $results        = [];
 
         foreach ($participations as $participation) {
             if (!isset($results[ $participation->user_id ])) {
-                $results[ $participation->user_id ] = new class($participation->user) {
-
+                $results[ $participation->user_id ] = new class($participation->user)
+                {
                     public $user;
                     public $points;
 
-                    public function __construct($user) {
-                        $this->user = $user;
+                    public function __construct($user)
+                    {
+                        $this->user   = $user;
                         $this->points = 0;
                     }
                 };
             }
 
-            $answers = $participation->answers;
-
-            foreach ($answers as $answer) {
-                $results[ $participation->user_id]->points += $answer->isValid;
-            }
+            $answer = $participation->answer;
+            $results[ $participation->user_id ]->points += $answer->isValid;
         }
 
         return view('qcm.teacher.notes', compact('qcm', 'results'));
@@ -371,9 +365,9 @@ class QcmController extends Controller
     public function getMine()
     {
         $qcms = Qcm::where('user_id', Auth::id())->with('subject')->orderBy(
-                'created_at',
-                'desc'
-            )->paginate(20);
+            'created_at',
+            'desc'
+        )->paginate(20);
 
         $qcms->setPath(route('qcm::mine'));
 
