@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
                 'email' => 'kocal' . $i . '@kocal.fr',
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
-                'password' => 'kocall'
+                'password' => Hash::make('kocall')
             ]);
         }
     }

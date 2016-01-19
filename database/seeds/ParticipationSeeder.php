@@ -18,7 +18,7 @@ class ParticipationSeeder extends Seeder
         $qcms  = Qcm::all();
 
         foreach ($users as $user) {
-            if ($user->id == 0) {
+            if ($user->id == 1) {
                 continue;
             }
 
@@ -31,7 +31,7 @@ class ParticipationSeeder extends Seeder
                         [
                             'user_id'     => $user->id,
                             'question_id' => $question->id,
-                            'answer_id'   => $answers->random()->id,
+                            'answer_id'   => $answers->first()->id + rand(0, 1),
                             'qcm_id'      => $qcm->id,
                         ]
                     );
