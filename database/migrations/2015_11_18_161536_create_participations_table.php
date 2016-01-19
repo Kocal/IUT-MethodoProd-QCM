@@ -14,6 +14,7 @@ class CreateParticipationsTable extends Migration
         Schema::create('participations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('qcm_id')->unsigned();
             $table->integer('question_id')->unsigned();
             $table->integer('answer_id')->unsigned();
         });
