@@ -13,7 +13,6 @@ class CreateUsersTable extends Migration
     public function up() {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id'); // Identifiant
-            $table->tinyInteger('type'); // Type d'utilisateur (Enseignant ou Etudiant)
             $table->string('first_name'); // Prénom
             $table->string('last_name'); // Nom de famille
             $table->string('status', 20); // Type de l'utilisateur
