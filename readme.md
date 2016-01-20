@@ -5,7 +5,7 @@ La création de QCM se fait par les professeurs, et les étudiants peuvent ensui
 
 ## Installation
 ```bash
-$ git clone https://github.com/Kocal/IUT-PHP-Le-Chaudron-Baveur.git
+$ git clone https://github.com/Kocal/IUT-MethodoProd-QCM.git
 $ cp .env.example .env
 $ npm install
 $ composer install
